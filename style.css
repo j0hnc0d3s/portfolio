@@ -143,6 +143,13 @@ h3{
 
 }
 
+h4{
+
+    color: var(--title-color);
+    font-weight: var(--weight-600);
+
+}
+
 ul{
 
     list-style: none;
@@ -205,6 +212,15 @@ img{
     letter-spacing: 1px;
     margin-bottom: 0.5rem;
 
+}
+
+.section__subtitle{
+    font-size: var(--h4-font-size);
+    font-weight: var(--weight-600);
+    line-height: 1.2;
+    margin-bottom: 1.5rem; 
+    color: var(--first-color);
+    text-transform: uppercase;
 }
 
 .title-center{
