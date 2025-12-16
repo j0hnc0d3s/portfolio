@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('./assets/fonts/fonts.css');
+@import url('./styles/animations.css');
+@import url('./styles/utilities.css');
+
+body {
+  font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.font-bold {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 700;
+}
+
+.font-semibold {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 600;
+}
+
+.font-medium {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 500;
+}
+
+.font-regular {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 400;
+}
+
+.font-light {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 300;
+}
