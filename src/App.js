@@ -215,7 +215,7 @@ const Portfolio = () => {
       title: 'Movie Renting Web Application', 
       description: 'A web application that shows different movies you can rent.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/medic.git',
+      link: 'https://github.com/j0hnc0d3s/info3180-lab5',
       image: images.project8,  
     },
     { 
@@ -492,7 +492,7 @@ const Portfolio = () => {
       <nav className="glass-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <a href="#home" className="text-3xl font-bold">
+            <a href="/#about" className="text-3xl font-bold">
               <span className="text-gradient">John</span>
             </a>
             
