@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.058156ed.css",
-    "main.js": "/portfolio/static/js/main.b83ec5c0.js",
+    "main.js": "/portfolio/static/js/main.b389b313.js",
     "static/media/project3.png": "/portfolio/static/media/project3.6429ecaacfdbb95fc02f.png",
     "static/media/image5.png": "/portfolio/static/media/image5.1ff9bd1de19cebdb0b3c.png",
     "static/media/image4.png": "/portfolio/static/media/image4.9621ec4a1f92d811ceea.png",
@@ -14,6 +14,7 @@
     "static/media/Gilroy-Regular.ttf": "/portfolio/static/media/Gilroy-Regular.5b89a8df3b17dccdb73f.ttf",
     "static/media/image1.jpg": "/portfolio/static/media/image1.b57cf1147e51701305b8.jpg",
     "static/media/Gilroy-Bold.ttf": "/portfolio/static/media/Gilroy-Bold.ca49f7658c4eaac78b6d.ttf",
+    "static/media/project10.png": "/portfolio/static/media/project10.4e560da8997497a771c8.png",
     "static/media/image6.jpeg": "/portfolio/static/media/image6.06a2c865745471cbec09.jpeg",
     "static/media/Josiah-John Green - CV.pdf": "/portfolio/static/media/Josiah-John Green - CV.7b54e60da1f9e9f58532.pdf",
     "static/media/image3.jpeg": "/portfolio/static/media/image3.5c06131dbcee920faf3f.jpeg",
@@ -34,10 +35,10 @@
     "static/media/js.png": "/portfolio/static/media/js.3dfb665e058d08c99f28.png",
     "index.html": "/portfolio/index.html",
     "main.058156ed.css.map": "/portfolio/static/css/main.058156ed.css.map",
-    "main.b83ec5c0.js.map": "/portfolio/static/js/main.b83ec5c0.js.map"
+    "main.b389b313.js.map": "/portfolio/static/js/main.b389b313.js.map"
   },
   "entrypoints": [
     "static/css/main.058156ed.css",
-    "static/js/main.b83ec5c0.js"
+    "static/js/main.b389b313.js"
   ]
 }
