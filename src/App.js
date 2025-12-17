@@ -269,11 +269,11 @@ const Portfolio = () => {
     },
     { 
       title: 'Faculty Graphics', 
-      escription: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', 
+      description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', 
       category: 'design',
       link: 'https://mymonauwi-my.sharepoint.com/:f:/g/personal/josiahjohn_green_mymona_uwi_edu/EtkHsLvbYe1EhVZtDtH8td4BRzpFYwKxModweavNwrj4jA?e=8Zf112',
       image: images.project3,  
-    }
+    },
   ];
 
   const [filter, setFilter] = useState('all');
@@ -306,6 +306,122 @@ const Portfolio = () => {
       alert('Error sending message. Please try again.');
     }
   };
+
+  const navigation = [
+    { 
+      id: 'about', 
+      label: 'About'
+    },
+    { 
+      id: 'works', 
+      label: 'Works'
+    },
+    { 
+      id: 'contact', 
+      label: 'Contact'
+    }
+  ];
+
+  const contacts = [
+    { 
+      icon: Phone, 
+      title: 'Call Me', 
+      content: '+1 (876)-208-2517',
+      link: 'tel:+18762082517'
+    },
+    { 
+      icon: Mail, 
+      title: 'Email Me', 
+      content: 'josiahjohngreen@gmail.com',
+      link: 'mailto:josiahjohngreen@gmail.com'
+    },
+    { 
+      icon: MapPin, 
+      title: 'Location', 
+      content: 'Kingston, Jamaica',
+      link: null
+    }
+  ];
+
+  const positions = [
+    { 
+      title: 'Secretary', 
+      org: 'The UWI Japan Club', 
+      date: 'September 2024 - May 2025' 
+    },
+    { 
+      title: 'Assistant Vice President', 
+      org: 'The UWI Japan Club',
+      date: 'February 2022 - May 2025' 
+    },
+    { 
+      title: 'Public Relations Officer', 
+      org: 'The UWI Japan Club', 
+      date: 'November 2022 - May 2025' 
+    },
+    { 
+      title: 'Publications Chairman',
+      org: 'Faculty of Science and Technology Guild', 
+      date: 'June 2023 - June 2024' 
+    },
+  ];
+
+  const career = [
+    { 
+      title: 'Content Strategist', 
+      org: 'Faculty of Science and Technology', 
+      date: 'January 2025 - December 2025' 
+    },
+    { 
+      title: 'Technical Support Intern', 
+      org: 'Mona School of Business & Management', 
+      date: 'August 2025 - December 2025' 
+    },
+    { 
+      title: 'Junior Software Engineer', 
+      org: 'Push Technology Limited',
+      date: 'June 2025 - September 2025' 
+    },
+    { 
+      title: 'Full Stack Developer', 
+      org: 'Janexco Limited', 
+      date: 'July 2024 - August 2025' 
+    },
+  ];
+
+  const socials = [
+    { 
+      icon: Instagram, 
+      link: 'https://www.instagram.com/3ur.k4/' 
+    },
+    { 
+      icon: Linkedin, 
+      link: 'https://www.linkedin.com/in/josiah-john-green/' 
+    },
+    { 
+      icon: Github, 
+      link: 'https://github.com/j0hnc0d3s' 
+    }
+  ];
+
+  const information = [
+    { 
+      label: 'Name', 
+      value: 'Josiah-John Green' 
+    },
+    { 
+      label: 'Age', 
+      value: '23 Years' 
+    },
+    { 
+      label: 'From', 
+      value: 'Kingston, Jamaica' 
+    },
+    { 
+      label: 'Email', 
+      value: 'josiahjohngreen@gmail.com' 
+    }
+  ];
 
   const skills = {
     frontend: [
@@ -381,11 +497,7 @@ const Portfolio = () => {
             </a>
             
             <div className="hidden md:flex space-x-8">
-              {[
-                { id: 'about', label: 'About'},
-                { id: 'works', label: 'Works' },
-                { id: 'contact', label: 'Contact'}
-              ].map(({ id, label }) => (
+              {navigation.map(({ id, label }) => (
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
@@ -400,7 +512,6 @@ const Portfolio = () => {
               ))}
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden text-blue-400 hover:text-blue-300 transition-colors"
@@ -413,20 +524,7 @@ const Portfolio = () => {
         {isMenuOpen && (
           <div className="md:hidden glass-effect border-t border-gray-800">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {[
-                { 
-                  id: 'about', 
-                  label: 'About'
-                },
-                { 
-                  id: 'works', 
-                  label: 'Works'
-                },
-                { 
-                  id: 'contact', 
-                  label: 'Contact'
-                }
-              ].map(({ id, label }) => (
+              {navigation.map(({ id, label }) => (
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
@@ -449,7 +547,6 @@ const Portfolio = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
         
-        {/* Cursor glow effect */}
         <div 
           className="absolute w-96 h-96 rounded-full pointer-events-none transition-opacity duration-300"
           style={{
@@ -491,11 +588,7 @@ const Portfolio = () => {
                 </a>
                 
                 <div className="flex items-center gap-4">
-                  {[
-                    { icon: Instagram, link: 'https://www.instagram.com/3ur.k4/' },
-                    { icon: Linkedin, link: 'https://www.linkedin.com/in/josiah-john-green/' },
-                    { icon: Github, link: 'https://github.com/j0hnc0d3s' }
-                  ].map((social, idx) => (
+                  {socials.map((social, idx) => (
                     <a
                       key={idx}
                       href={social.link}
@@ -516,13 +609,9 @@ const Portfolio = () => {
               onMouseLeave={() => setIsHovered(false)}
             >
               <div className="grid grid-cols-2 gap-6 py-6">
-                {[
-                  { label: 'Name', value: 'Josiah-John Green' },
-                  { label: 'Age', value: '23 Years' },
-                  { label: 'From', value: 'Kingston, Jamaica' },
-                  { label: 'Email', value: 'josiahjohngreen@gmail.com' }
-                ].map((item, idx) => {
+                {information.map((item, idx) => {
                   const position = getScatterPosition(idx);
+
                   return (
                     <div
                       key={idx}
@@ -536,6 +625,7 @@ const Portfolio = () => {
                       <h3 className="text-blue-500 font-semibold mb-1 text-sm">
                         {item.label}
                       </h3>
+
                       <p className="text-white text-xs font-regular">
                         {item.value}
                       </p>
@@ -658,23 +748,7 @@ const Portfolio = () => {
               </h3>
 
               <div className="space-y-8">
-                {[
-                  { 
-                    title: 'Technical Support Intern', 
-                    org: 'Mona School of Business & Management', 
-                    date: 'August 2025 - December 2025' 
-                  },
-                  { 
-                    title: 'Junior Software Engineer', 
-                    org: 'Push Technology Limited',
-                    date: 'June 2025 - September 2025' 
-                  },
-                  { 
-                    title: 'Full Stack Developer', 
-                    org: 'Janexco Limited', 
-                    date: 'July 2024 - August 2025' 
-                  },
-                ].map((position, idx) => (
+                {career.map((position, idx) => (
                   <div 
                     key={idx} 
                     className="relative"
@@ -705,28 +779,7 @@ const Portfolio = () => {
               </h3>
 
               <div className="space-y-8">
-                {[
-                  { 
-                    title: 'Secretary', 
-                    org: 'The UWI Japan Club', 
-                    date: 'September 2024 - May 2025' 
-                  },
-                  { 
-                    title: 'Assistant Vice President', 
-                    org: 'The UWI Japan Club',
-                    date: 'February 2022 - May 2025' 
-                  },
-                  { 
-                    title: 'Public Relations Officer', 
-                    org: 'The UWI Japan Club', 
-                    date: 'November 2022 - May 2025' 
-                  },
-                  { 
-                    title: 'Publications Chairman',
-                    org: 'Faculty of Science and Technology Guild', 
-                    date: 'June 2023 - June 2024' 
-                  },
-                ].map((position, idx) => (
+                {positions.map((position, idx) => (
                   <div 
                     key={idx} 
                     className="relative"
@@ -749,68 +802,6 @@ const Portfolio = () => {
           </div>
         </div>
       </section>
-
-      {/*       
-        <section 
-          id="services" 
-          className="py-24"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <p className="text-blue-500 text-sm font-semibold uppercase tracking-wider mb-2">What I do for you</p>
-              <h2 className="text-3xl font-semibold text-white">Services</h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { 
-                  title: 'UI/UX Design', 
-                  description: 'Designing user-centric interfaces that engage and delight.', 
-                  number: '01' 
-                },
-                { 
-                  title: 'Web Development', 
-                  description: 'Transforming your ideas into functional and dynamic web applications.', 
-                  number: '02' 
-                },
-                { 
-                  title: 'Graphic Design', 
-                  description: 'Creating stunning illustrations that convey your message with artistic flair.', 
-                  number: '03' 
-                },
-                { 
-                  title: 'App Development', 
-                  description: 'Developing masterful interfaces that mix appeal with functionality.', 
-                  number: '04' 
-                }
-              ].map((service, idx) => (
-                <div key={idx} className="relative bg-gray-900 border border-gray-800 p-8 rounded-lg hover:bg-gray-950 hover:border-gray-700 transition-all group">
-                  <div className="text-blue-500 text-3xl mb-4">
-                    {idx === 0 && <img/>}
-                    {idx === 1 && <img/>}
-                    {idx === 2 && <img/>}
-                    {idx === 3 && <img/>}
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-white mb-3 font-bold">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-gray-400 text-sm leading-relaxed font-regular">
-                    {service.description}
-                  </p>
-
-                  <span className="absolute top-4 right-8 text-7xl text-white opacity-5 font-bold">
-                    {service.number}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>   
-      */}
 
       <section 
         id="works" 
@@ -987,26 +978,7 @@ const Portfolio = () => {
           <div className="grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div className="space-y-6">
-              {[
-                { 
-                  icon: Phone, 
-                  title: 'Call Me', 
-                  content: '+1 (876)-208-2517',
-                  link: 'tel:+18762082517'
-                },
-                { 
-                  icon: Mail, 
-                  title: 'Email Me', 
-                  content: 'josiahjohngreen@gmail.com',
-                  link: 'mailto:josiahjohngreen@gmail.com'
-                },
-                { 
-                  icon: MapPin, 
-                  title: 'Location', 
-                  content: 'Kingston, Jamaica',
-                  link: null
-                }
-              ].map((item, idx) => (
+              {contacts.map((item, idx) => (
                 <div 
                   key={idx}
                   className="glass-effect-2 p-6 rounded-2xl hover:bg-white/5 transition-all duration-300 group"
