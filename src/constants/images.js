@@ -14,7 +14,7 @@ import project6 from '../assets/images/projects/project6.png';
 import project7 from '../assets/images/projects/project7.png';
 import project8 from '../assets/images/projects/project8.png';
 import project9 from '../assets/images/projects/project9.png';
-
+import project10 from '../assets/images/projects/project10.png';
 
 export default { 
     image1,
@@ -32,4 +32,5 @@ export default {
     project7,
     project8,
     project9,
+    project10,
 };

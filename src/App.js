@@ -264,15 +264,22 @@ const Portfolio = () => {
       title: 'Language Club Graphics', 
       description: 'A showcase of my designs done during my tenure with the UWI Japan Club.', 
       category: 'design', 
-      link: 'https://drive.google.com/drive/folders/1smfef621_ovkp1saDy_xWQ4jjMt21Ewu?usp=sharing',
+      link: 'https://drive.google.com/drive/folders/1UR8ucK7KTVspJmV4abj89uIeD3guHEoO?usp=sharing',
       image: images.project9,  
     },
     { 
       title: 'Faculty Graphics', 
       description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', 
       category: 'design',
-      link: 'https://mymonauwi-my.sharepoint.com/:f:/g/personal/josiahjohn_green_mymona_uwi_edu/EtkHsLvbYe1EhVZtDtH8td4BRzpFYwKxModweavNwrj4jA?e=8Zf112',
+      link: 'https://drive.google.com/drive/folders/1MLvWugbG3cSrIVdehqeZ6FHpCl3rX-gG?usp=drive_link',
       image: images.project3,  
+    },
+    { 
+      title: 'Other Graphics', 
+      description: 'A showcase of my designs done during my tenure across various positions outside the Japan Club, and the Faculty Guild.', 
+      category: 'design',
+      link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing',
+      image: images.project10,  
     },
   ];
 
