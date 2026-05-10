@@ -15,6 +15,9 @@ import project7 from '../assets/images/projects/project7.png';
 import project8 from '../assets/images/projects/project8.png';
 import project9 from '../assets/images/projects/project9.png';
 import project10 from '../assets/images/projects/project10.png';
+import project11 from '../assets/images/projects/project11.png';
+import project14 from '../assets/images/projects/project14.png';
+import project15 from '../assets/images/projects/project15.png';
 
 export default { 
     image1,
@@ -33,4 +36,7 @@ export default {
     project8,
     project9,
     project10,
+    project11,
+    project14,
+    project15,
 };

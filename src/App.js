@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, User, Briefcase, Settings, Mail, Instagram, Linkedin, Github, ChevronLeft, ChevronRight, BriefcaseBusiness, Award, Download, Cpu, Layers, Zap, Globe, Smartphone, Link, Share2, MapPin, Phone, Send } from 'lucide-react';
+import { Menu, X, Home, User, Briefcase, Settings, Mail, Instagram, Linkedin, Github, LinkIcon, ChevronLeft, ChevronRight, BriefcaseBusiness, Award, Download, Cpu, Layers, Zap, Globe, Smartphone, Link, Share2, MapPin, Phone, Send } from 'lucide-react';
 
 import {images, icons} from './constants';
 
 import './App.css';
-import cvFile from './assets/files/Josiah-John Green - CV.pdf';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +42,7 @@ const Portfolio = () => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
       
-      const sections = ['home', 'about', 'carousel', 'qualification', 'services', 'skills', 'works', 'contact'];
+      const sections = ['home', 'about', 'featured', 'carousel', 'qualification', 'services', 'skills', 'works', 'contact'];
       const scrollPosition = window.scrollY + 100;
 
       for (const section of sections) {
@@ -215,49 +214,42 @@ const Portfolio = () => {
       title: 'Movie Renting Web Application', 
       description: 'A web application that shows different movies you can rent.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-lab5',
+      link: '',
       image: images.project8,  
-    },
-    { 
-      title: 'Faculty Guild Website', 
-      description: 'A collobrative project with the guild.', 
-      category: 'web', 
-      link: 'https://uwimonafstgc.wixsite.com/fstgc',
-      image: images.project2, 
     },
     { 
       title: 'Social Media Web App', 
       description: 'A colloborative final project for a web development course.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-project2.git',
+      link: '',
       image: images.project7,  
     },
     { 
       title: 'Property Renting Web App', 
       description: 'A app that showcases various properties and related information with contact capabilities.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-project1.git',
+      link: '',
       image: images.project4,  
     },
     { 
       title: 'Superhero Search Web App', 
       description: 'A search directory that showcases various superhereos in the marvel universe, and related information.',
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info2180-lab4.git',
+      link: '',
       image: images.project5,  
     },
     { 
       title: 'Country/City Search Web App', 
       description: 'A search directory that showcases the countries of the world and their capitals.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info2180-lab5.git',
+      link: '',
       image: images.project6,  
     },
     { 
       title: 'Employee Management Web App', 
       description: 'A directory that shows various movies and related information.', 
       category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-lab5.git',
+      link: '',
       image: images.project1,  
     },
     { 
@@ -281,10 +273,17 @@ const Portfolio = () => {
       link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing',
       image: images.project10,  
     },
+    { 
+      title: 'Crime.net', 
+      description: 'Crime.net is a UX/UI concept for a community-driven public safety mobile application.', 
+      category: 'ui',
+      link: 'https://www.figma.com/proto/N5SCKacw2dcaCbijAUKca4/Crime.net?node-id=33-508&t=Yye1hnvWIl80OaUM-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=183%3A233',
+      image: images.project11,  
+    },
   ];
 
-  const [filter, setFilter] = useState('all');
-  const filteredProjects = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+  const [filter, setFilter] = useState('app');
+  const filteredProjects = filter === '' ? projects : projects.filter(p => p.category === filter);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -377,29 +376,29 @@ const Portfolio = () => {
     { 
       title: 'Content Strategist', 
       org: 'Faculty of Science and Technology', 
-      date: 'January 2025 - December 2025' 
+      date: 'January 2025 - May 2026' 
     },
     { 
       title: 'Technical Support Intern', 
       org: 'Mona School of Business & Management', 
-      date: 'August 2025 - December 2025' 
+      date: 'August 2025 - June 2026' 
     },
     { 
-      title: 'Junior Software Engineer', 
+      title: 'Junior Software Engineer Intern', 
       org: 'Push Technology Limited',
-      date: 'June 2025 - September 2025' 
+      date: 'June 2025 - August 2025' 
     },
     { 
-      title: 'Full Stack Developer', 
-      org: 'Janexco Limited', 
-      date: 'July 2024 - August 2025' 
+      title: 'System Analyst Intern', 
+      org: 'Port Authority of Jamaica',
+      date: 'June 2023 - August 2023' 
     },
   ];
 
   const socials = [
     { 
-      icon: Instagram, 
-      link: 'https://www.instagram.com/3ur.k4/' 
+      icon: LinkIcon, 
+      link: 'https://3urek4.vercel.app/' 
     },
     { 
       icon: Linkedin, 
@@ -492,6 +491,64 @@ const Portfolio = () => {
       }
     ]
   };
+
+  const featuredProjects = [
+    {
+      title: 'Stack',
+      tagline: 'Multi-Tenant Inventory Management System',
+      description: 'Production-grade enterprise SaaS approved as the replacement for an MSBM Power Platform pilot. Multi-tenancy enforced through JWT-scoped row-level isolation, designed to license to other Caribbean institutions.',
+      tech: ['Flask', 'PostgreSQL', 'React', 'Vite', 'APScheduler'],
+      image: images.project12,
+      liveDemo: '',
+      github: '',
+      role: 'Founder & Lead Engineer',
+      awards: []
+    },
+    {
+      title: 'Aegis',
+      tagline: 'AI-Powered Campus Safety Platform',
+      description: 'Computer vision–driven safety system with webcam/mobile camera input, real-time monitoring dashboard, and missing-person profile management. Custom liquid-glass dark UI shipped from Figma to production.',
+      tech: ['React', 'Node.js', 'Computer Vision', 'Firebase'],
+      image: images.project13,
+      liveDemo: '',
+      github: '',
+      role: 'Co-Founder',
+      awards: ['Intellibus Social Good Award 2026']
+    },
+    {
+      title: 'FreshJA',
+      tagline: 'Agricultural E-Commerce Platform',
+      description: 'Full-stack platform connecting Jamaican farmers directly with consumers. Built for low-bandwidth rural users with vendor onboarding, inventory, and order workflows.',
+      tech: ['React', 'Vite', 'Firebase', 'PostgreSQL', 'Vercel'],
+      image: images.project14,
+      liveDemo: '',
+      github: '',
+      role: 'Co-Founder & CTO',
+      awards: ['Vincent Hosang 2025 — 1st Runner Up', 'Resolution SVC 2026 Finalist']
+    },
+    {
+      title: 'Ripple',
+      tagline: 'Mobile Wellness Companion',
+      description: 'Wellness-focused mobile app under 3urek4 — gentle daily rituals over dopamine loops. Soft ocean-teal palette with an axolotl mascot, built end-to-end on React Native.',
+      tech: ['React Native', 'Node.js', 'Firebase', 'Figma'],
+      image: images.project15,
+      liveDemo: '',
+      github: '',
+      role: 'Founder',
+      awards: []
+    },
+    {
+      title: 'Medic',
+      tagline: 'Healthcare Queue & Clinic Management',
+      description: 'Capstone queue management system scoped to the UHWI Casualty Department. QR-based patient tracking, dual admin/staff interfaces, and role-based access control with Firestore security rules.',
+      tech: ['React', 'Firebase', 'Firestore'],
+      image: images.project16,
+      liveDemo: '',
+      github: '',
+      role: 'Lead Developer',
+      awards: []
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-gray-950 text-gray-100 font-sans overflow-x-hidden">
@@ -586,8 +643,9 @@ const Portfolio = () => {
 
               <div className="flex flex-wrap items-center gap-6 pt-4">
                 <a 
-                  href={cvFile} 
-                  download="Josiah-John Green - CV.pdf"
+                  href="https://docs.google.com/document/d/1pjocSQGxeevWRXKuAU8ghHsOZDAWojXl0N76VvMpI4Y/edit?tab=t.zhqluw9cyc1o/export?format=pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="glass-effect-2 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-2"
                 >
                   <Download size={20} />
@@ -733,6 +791,121 @@ const Portfolio = () => {
       </section>
 
       <section 
+        id="featured" 
+        className="py-24 fade-in-section"
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12">
+            <div className="text-center">
+              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">Featured Work</p>
+              <h2 className="text-4xl font-bold text-white">3urek4 Portfolio</h2>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+              <div className="relative overflow-hidden py-8">
+                <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-transparent z-10"></div>
+
+                <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-transparent to-transparent z-10"></div>
+                
+                <div className="marquee-container flex">
+                  <div className="marquee-left flex gap-8">
+                    {[...featuredProjects, ...featuredProjects].map((project, idx) => (
+                      <div
+                        key={idx}
+                        className="glass-effect rounded-3xl overflow-hidden flex flex-col flex-shrink-0 w-[600px]"
+                      >
+                        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-800 to-blue-500">
+                          {project.image && (
+                            <img 
+                              src={project.image} 
+                              alt={project.title}
+                              className="w-full h-full object-cover opacity-80"
+                            />
+                          )}
+                          <div className="absolute top-4 left-4">
+                            <span className="glass-effect-2 px-3 py-1 rounded-full text-xs font-medium text-white">
+                              {project.role}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="p-6 space-y-3 flex-1 flex flex-col">
+                          <div>
+                            <h3 className="text-xl font-bold text-white mb-1">
+                              {project.title}
+                            </h3>
+                            <p className="text-blue-400 text-xs font-medium">
+                              {project.tagline}
+                            </p>
+                          </div>
+
+                          <p className="text-gray-300 text-sm leading-relaxed font-regular line-clamp-4">
+                            {project.description}
+                          </p>
+
+                          {project.awards && project.awards.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {project.awards.map((award, i) => (
+                                <span 
+                                  key={i}
+                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-500/10 text-yellow-400 text-xs rounded-full font-medium border border-yellow-500/20"
+                                >
+                                  <Award size={10} />
+                                  {award}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.tech.slice(0, 4).map((tech, i) => (
+                              <span 
+                                key={i}
+                                className="px-2.5 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full font-medium border border-blue-500/20"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex flex-wrap gap-2 pt-2 mt-auto">
+                            {project.liveDemo && (
+                              <a
+                                href={project.liveDemo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="glass-effect-2 px-4 py-2 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-1.5 text-xs"
+                              >
+                                <Globe size={14} />
+                                Demo
+                              </a>
+                            )}
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="glass-effect-2 px-4 py-2 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-1.5 text-xs"
+                              >
+                                <Github size={14} />
+                                Code
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+
+      <section 
         id="qualification" 
         className="py-24 fade-in-section"
       >
@@ -820,11 +993,11 @@ const Portfolio = () => {
               My Portfolio
             </p>
 
-            <h2 className="text-4xl font-bold text-white">Recent Work</h2>
+            <h2 className="text-4xl font-bold text-white">Previous Work</h2>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {['all', 'app', 'web', 'ui', 'design'].map((category) => (
+            {['app', 'web', 'ui', 'design'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
@@ -842,7 +1015,7 @@ const Portfolio = () => {
           {filteredProjects.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-gray-400 text-lg font-regular">
-                No projects here yet, or none I can show here (hehe) 😜
+                No projects here yet
               </p>
             </div>
           ) : (
@@ -1082,8 +1255,8 @@ const Portfolio = () => {
             <p className="text-gray-100 font-regular">2025 © Josiah-John Green. All Right Reserved</p>
             
             <div className="flex items-center space-x-6">
-              <a href="https://www.instagram.com/3ur.k4" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
-                <Instagram size={20} />
+              <a href="https://3urek4.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
+                <LinkIcon size={20} />
               </a>
             
               <a href="https://www.linkedin.com/in/josiah-john-green/" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
