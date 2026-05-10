@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+<h1 align="center">Hey, I'm Josiah-John 👋🏾</h1>
+<p align="center">
+  <em>This little corner of the internet is where I tell the world what I've been building.</em>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center">
+  <a href="https://j0hnc0d3s.github.io/portfolio"><img src="https://img.shields.io/badge/Live_Site-View_Portfolio-3B82F6?style=for-the-badge&logo=react&logoColor=white" alt="Live Site" /></a>
+  <a href="https://3urek4.vercel.app"><img src="https://img.shields.io/badge/3urek4-Studio-1F2937?style=for-the-badge" alt="3urek4" /></a>
+  <a href="https://www.linkedin.com/in/josiah-john-green/"><img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
+</p>
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## About This Site
 
-### `npm start`
+I'm a final-year Software Engineering student at the University of the West Indies, Mona, and the founder of [3urek4](https://3urek4.vercel.app) — a Jamaican software studio shipping production web and mobile products.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This portfolio is the home base for everything I'm building, the experiences shaping me, and the work I've been recognized for along the way. It's React, custom-built, and meant to feel less like a CV and more like a window into how I think.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✨ Features
 
-### `npm test`
+- 🌌 **Liquid-glass aesthetic** — custom dark theme with glass-morphism cards, gradient masks, and cursor-reactive ambient lighting
+- ⌨️ **Typing animation** — cycles through the hats I wear (Software Engineer, Frontend Developer, UI/UX Designer, and so on)
+- 🎯 **Scatter-effect info cards** — playful hover interaction on the About section
+- 🎞️ **Achievement carousel** — auto-cycling through awards, summits, and recognitions
+- 🛠️ **Marquee skill ribbons** — endlessly scrolling tech stack with hover-to-pause
+- 🏆 **Featured Work** — production projects from 3urek4 (Aegis, Stack, FreshJA, Ripple, Medic)
+- 🎓 **Recent Work** — coursework and academic projects from UWI
+- 📩 **Live contact form** — wired up via Formspree for direct messages
+- 📄 **Auto-updating CV download** — pulls from Google Docs so the resume is always current
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧪 Tech Stack
 
-### `npm run build`
+[![Tech Stack](https://skillicons.dev/icons?i=react,vite,tailwind,js,html,css,figma,vercel,git,github)](https://skillicons.dev)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🗺️ Site Map
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Section | What's There |
+|---|---|
+| **About** | Who I am, the hats I wear, scattered facts |
+| **Journey** | Awards, hackathons, summits, recognitions |
+| **Qualifications** | Experience and leadership positions |
+| **Featured Work** | Production projects under 3urek4 |
+| **Recent Work** | Academic and coursework projects |
+| **Skills** | Languages, frameworks, and tools I use |
+| **Contact** | Drop me a line — I read every message |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🛠️ Run Locally
 
-### `npm run eject`
+```bash
+git clone https://github.com/j0hnc0d3s/portfolio.git
+cd portfolio
+npm install
+npm run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Open `http://localhost:3000` and you're in.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎨 Design Philosophy
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Most developer portfolios feel like a checklist: hero, projects, skills, contact, done. I wanted this one to feel more like an *experience* — something you'd actually want to scroll through, not just skim for a hire/no-hire signal. Glass surfaces, gentle motion, cursor-aware lighting. The personality has to come through somewhere; the resume is for the dry stuff.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🚀 Deployment
 
-## Learn More
+Currently deployed on **GitHub Pages**: [j0hnc0d3s.github.io/portfolio](https://j0hnc0d3s.github.io/portfolio)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run deploy
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📩 Let's Talk
 
-### Code Splitting
+If you've made it this far, you've already done more than most. Whether you're a recruiter, a fellow builder, or just curious about something here — reach out:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- 📧 **Email:** josiahjohngreen@gmail.com
+- 💼 **LinkedIn:** [josiah-john-green](https://www.linkedin.com/in/josiah-john-green/)
+- 🌐 **3urek4 Studio:** [3urek4.vercel.app](https://3urek4.vercel.app)
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p align="center">
+  <em>Built with care in Kingston, Jamaica 🇯🇲</em>
+</p>
