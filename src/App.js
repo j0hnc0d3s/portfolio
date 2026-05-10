@@ -799,8 +799,8 @@ const Portfolio = () => {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12">
             <div className="text-center">
-              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">Featured Work</p>
-              <h2 className="text-4xl font-bold text-white">3urek4 Portfolio</h2>
+              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">My Portfolio</p>
+              <h2 className="text-4xl font-bold text-white">Featured Work</h2>
             </div>
           </div>
 
