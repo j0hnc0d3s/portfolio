@@ -35,7 +35,7 @@ const Portfolio = () => {
       tagline: 'AI-Powered Campus Safety Platform',
       description: 'Computer vision–driven safety system with webcam/mobile camera input, real-time monitoring dashboard, and missing-person profile management. Custom liquid-glass dark UI shipped from Figma to production.',
       tech: ['React', 'Node.js', 'Computer Vision', 'Firebase'],
-      image: images.project13,
+      image: '',
       liveDemo: '',
       github: '',
       role: 'Co-Founder',
