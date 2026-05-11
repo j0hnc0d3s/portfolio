@@ -287,65 +287,84 @@ const Portfolio = () => {
     setCurrentSlide((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
   };
 
+  const works = [
+    {
+      id: 0,
+      title: 'app',
+    },
+    {
+      id: 1,
+      title: 'web',
+    },
+    {
+      id: 2,
+      title: 'ui',
+    },
+    {
+      id: 3,
+      title: 'design',
+    },
+  ];
+
   const projects = [
     { 
       title: 'Movie Renting Web Application', 
       description: 'A web application that shows different movies you can rent.', 
       category: 'web', 
-      link: '',
+      link: 'https://github.com/j0hnc0d3s/info3180-lab5',
       image: images.project8,  
     },
     { 
       title: 'Social Media Web App', 
       description: 'A colloborative final project for a web development course.', 
       category: 'web', 
-      link: '',
+      link: 'https://github.com/j0hnc0d3s/info3180-project2',
       image: images.project7,  
     },
     { 
       title: 'Property Renting Web App', 
       description: 'A app that showcases various properties and related information with contact capabilities.', 
       category: 'web', 
-      link: '',
+      link: 'https://github.com/j0hnc0d3s/info3180-project1',
       image: images.project4,  
     },
     { 
-      title: 'Superhero Search Web App', 
-      description: 'A search directory that showcases various superhereos in the marvel universe, and related information.',
-      category: 'web', 
-      link: '',
-      image: images.project5,  
+      title: 'Peli-Plan', 
+      description: 'A campus navigation application.', 
+      category: 'app', 
+      link: 'https://drive.google.com/file/d/1q7jiil6SqVr9LAryNveosBgZuSd3t0_L/view?usp=drive_link',
+      image: images.project16,  
     },
     { 
-      title: 'Country/City Search Web App', 
-      description: 'A search directory that showcases the countries of the world and their capitals.', 
-      category: 'web', 
-      link: '',
-      image: images.project6,  
+      title: 'Jam-Go', 
+      description: 'A island-wide transit app that incorporates both taxi and bus tranportation', 
+      category: 'app', 
+      link: 'https://drive.google.com/file/d/1kGs69HkV7CJ5oby4AgeJBe91JmZTCglD/view?usp=drive_link',
+      image: images.project13,  
     },
     { 
-      title: 'Employee Management Web App', 
-      description: 'A directory that shows various movies and related information.', 
-      category: 'web', 
-      link: '',
-      image: images.project1,  
+      title: 'Autocare', 
+      description: 'A car-care and rental application.', 
+      category: 'app', 
+      link: 'https://drive.google.com/file/d/13cnUgV3gv8H5iQDF28lPVkG4nFxcuOp_/view?usp=drive_link',
+      image: images.project12,  
     },
     { 
-      title: 'Language Club Graphics', 
+      title: 'Club', 
       description: 'A showcase of my designs done during my tenure with the UWI Japan Club.', 
       category: 'design', 
       link: 'https://drive.google.com/drive/folders/1UR8ucK7KTVspJmV4abj89uIeD3guHEoO?usp=sharing',
       image: images.project9,  
     },
     { 
-      title: 'Faculty Graphics', 
+      title: 'Guild', 
       description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', 
       category: 'design',
       link: 'https://drive.google.com/drive/folders/1MLvWugbG3cSrIVdehqeZ6FHpCl3rX-gG?usp=drive_link',
       image: images.project3,  
     },
     { 
-      title: 'Other Graphics', 
+      title: 'Companies', 
       description: 'A showcase of my designs done during my tenure across various positions outside the Japan Club, and the Faculty Guild.', 
       category: 'design',
       link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing',
@@ -1055,17 +1074,17 @@ const Portfolio = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {['web', 'ui', 'design'].map((category) => (
+            {works.map((category) => (
               <button
-                key={category}
-                onClick={() => setFilter(category)}
+                key={category.id}
+                onClick={() => setFilter(category.title)}
                 className={`px-6 py-2 rounded-lg capitalize transition-all ${
-                  filter === category
+                  filter === category.title
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
                     : 'glass-effect-2 text-gray-300 hover:bg-white/10'
                 }`}
               >
-                {category}
+                {category.title}
               </button>
             ))}
           </div>
@@ -1087,7 +1106,7 @@ const Portfolio = () => {
                   className="project-card group relative overflow-hidden rounded-2xl"
                 >
                   <div className={`h-48 bg-gradient-to-r from-blue-800 to-blue-500 `}>
-                    <img src={project.image} className="w-full h-full"/>
+                    <img src={project.image} className="w-full h-full object-cover"/>
                   </div>
                   
                   <div className="project-overlay absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center p-6 text-center">
