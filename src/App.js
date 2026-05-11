@@ -360,7 +360,7 @@ const Portfolio = () => {
     },
   ];
 
-  const [filter, setFilter] = useState('app');
+  const [filter, setFilter] = useState('web');
   const filteredProjects = filter === '' ? projects : projects.filter(p => p.category === filter);
 
   const handleFormChange = (e) => {
@@ -793,7 +793,7 @@ const Portfolio = () => {
               />
             </button>
 
-            <div className="flex justify-center gap-3 mt-8">
+            <div className="flex justify-center gap-3 mt-3">
               {carouselItems.map((_, idx) => (
                 <button
                   key={idx}
