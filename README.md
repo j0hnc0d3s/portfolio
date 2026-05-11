@@ -32,28 +32,9 @@ This portfolio is the home base for everything I'm building, the experiences sha
 | **Skills** | Languages, frameworks, and tools I use |
 | **Contact** | Drop me a line — I read every message |
 
-## 🛠️ Run Locally
-
-```bash
-git clone https://github.com/j0hnc0d3s/portfolio.git
-cd portfolio
-npm install
-npm run dev
-```
-
-Open `http://localhost:3000` and you're in.
-
 ## 🎨 Design Philosophy
 
 Most developer portfolios feel like a checklist: hero, projects, skills, contact, done. I wanted this one to feel more like an *experience* — something you'd actually want to scroll through, not just skim for a hire/no-hire signal. Glass surfaces, gentle motion, cursor-aware lighting. The personality has to come through somewhere; the resume is for the dry stuff.
-
-## 🚀 Deployment
-
-Currently deployed on **GitHub Pages**: [j0hnc0d3s.github.io/portfolio](https://j0hnc0d3s.github.io/portfolio)
-
-```bash
-npm run deploy
-```
 
 ## 📩 Let's Talk
 
