@@ -18,6 +18,64 @@ const Portfolio = () => {
     message: ''
   });
 
+  const featuredProjects = [
+    {
+      title: 'Stack',
+      tagline: 'Multi-Tenant Inventory Management System',
+      description: 'Production-grade enterprise SaaS approved as the replacement for an MSBM Power Platform pilot. Multi-tenancy enforced through JWT-scoped row-level isolation, designed to license to other Caribbean institutions.',
+      tech: ['Flask', 'PostgreSQL', 'React', 'Vite', 'APScheduler'],
+      image: images.project12,
+      liveDemo: '',
+      github: '',
+      role: 'Founder & Lead Engineer',
+      awards: []
+    },
+    {
+      title: 'Aegis',
+      tagline: 'AI-Powered Campus Safety Platform',
+      description: 'Computer vision–driven safety system with webcam/mobile camera input, real-time monitoring dashboard, and missing-person profile management. Custom liquid-glass dark UI shipped from Figma to production.',
+      tech: ['React', 'Node.js', 'Computer Vision', 'Firebase'],
+      image: images.project13,
+      liveDemo: '',
+      github: '',
+      role: 'Co-Founder',
+      awards: ['Intellibus Social Good Award 2026']
+    },
+    {
+      title: 'FreshJA',
+      tagline: 'Agricultural E-Commerce Platform',
+      description: 'Full-stack platform connecting Jamaican farmers directly with consumers. Built for low-bandwidth rural users with vendor onboarding, inventory, and order workflows.',
+      tech: ['React', 'Vite', 'Firebase', 'PostgreSQL', 'Vercel'],
+      image: images.project14,
+      liveDemo: '',
+      github: '',
+      role: 'Co-Founder & CTO',
+      awards: ['Vincent Hosang 2025 — 1st Runner Up', 'Resolution SVC 2026 Finalist']
+    },
+    {
+      title: 'Ripple',
+      tagline: 'Mobile Wellness Companion',
+      description: 'Wellness-focused mobile app under 3urek4 — gentle daily rituals over dopamine loops. Soft ocean-teal palette with an axolotl mascot, built end-to-end on React Native.',
+      tech: ['React Native', 'Node.js', 'Firebase', 'Figma'],
+      image: images.project15,
+      liveDemo: '',
+      github: '',
+      role: 'Founder',
+      awards: []
+    },
+    {
+      title: 'Medic',
+      tagline: 'Healthcare Queue & Clinic Management',
+      description: 'Capstone queue management system scoped to the UHWI Casualty Department. QR-based patient tracking, dual admin/staff interfaces, and role-based access control with Firestore security rules.',
+      tech: ['React', 'Firebase', 'Firestore'],
+      image: images.project16,
+      liveDemo: '',
+      github: '',
+      role: 'Lead Developer',
+      awards: []
+    }
+  ];
+
   const [displayedText, setDisplayedText] = useState('');
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -29,6 +87,28 @@ const Portfolio = () => {
 
   const [contactMousePos, setContactMousePos] = useState({ x: 0, y: 0 });
 
+  const [currentFeatured, setCurrentFeatured] = useState(0);
+
+  const [isFeaturedHovered, setIsFeaturedHovered] = useState(false);
+
+  useEffect(() => {
+    if (isFeaturedHovered) return;
+    
+    const interval = setInterval(() => {
+      setCurrentFeatured((prev) => (prev + 1) % featuredProjects.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [isFeaturedHovered, currentFeatured, featuredProjects.length]);
+
+  const nextFeatured = () => {
+    setCurrentFeatured((prev) => (prev + 1) % featuredProjects.length);
+  };
+
+  const prevFeatured = () => {
+    setCurrentFeatured((prev) => (prev - 1 + featuredProjects.length) % featuredProjects.length);
+  };
+
   const handleContactMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setContactMousePos({
@@ -36,7 +116,6 @@ const Portfolio = () => {
       y: e.clientY - rect.top
     });
   };
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,7 +141,6 @@ const Portfolio = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
 
   const handleMouseMove = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -319,8 +397,8 @@ const Portfolio = () => {
       label: 'About'
     },
     { 
-      id: 'works', 
-      label: 'Works'
+      id: 'featured', 
+      label: 'Featured'
     },
     { 
       id: 'contact', 
@@ -491,64 +569,6 @@ const Portfolio = () => {
       }
     ]
   };
-
-  const featuredProjects = [
-    {
-      title: 'Stack',
-      tagline: 'Multi-Tenant Inventory Management System',
-      description: 'Production-grade enterprise SaaS approved as the replacement for an MSBM Power Platform pilot. Multi-tenancy enforced through JWT-scoped row-level isolation, designed to license to other Caribbean institutions.',
-      tech: ['Flask', 'PostgreSQL', 'React', 'Vite', 'APScheduler'],
-      image: images.project12,
-      liveDemo: '',
-      github: '',
-      role: 'Founder & Lead Engineer',
-      awards: []
-    },
-    {
-      title: 'Aegis',
-      tagline: 'AI-Powered Campus Safety Platform',
-      description: 'Computer vision–driven safety system with webcam/mobile camera input, real-time monitoring dashboard, and missing-person profile management. Custom liquid-glass dark UI shipped from Figma to production.',
-      tech: ['React', 'Node.js', 'Computer Vision', 'Firebase'],
-      image: images.project13,
-      liveDemo: '',
-      github: '',
-      role: 'Co-Founder',
-      awards: ['Intellibus Social Good Award 2026']
-    },
-    {
-      title: 'FreshJA',
-      tagline: 'Agricultural E-Commerce Platform',
-      description: 'Full-stack platform connecting Jamaican farmers directly with consumers. Built for low-bandwidth rural users with vendor onboarding, inventory, and order workflows.',
-      tech: ['React', 'Vite', 'Firebase', 'PostgreSQL', 'Vercel'],
-      image: images.project14,
-      liveDemo: '',
-      github: '',
-      role: 'Co-Founder & CTO',
-      awards: ['Vincent Hosang 2025 — 1st Runner Up', 'Resolution SVC 2026 Finalist']
-    },
-    {
-      title: 'Ripple',
-      tagline: 'Mobile Wellness Companion',
-      description: 'Wellness-focused mobile app under 3urek4 — gentle daily rituals over dopamine loops. Soft ocean-teal palette with an axolotl mascot, built end-to-end on React Native.',
-      tech: ['React Native', 'Node.js', 'Firebase', 'Figma'],
-      image: images.project15,
-      liveDemo: '',
-      github: '',
-      role: 'Founder',
-      awards: []
-    },
-    {
-      title: 'Medic',
-      tagline: 'Healthcare Queue & Clinic Management',
-      description: 'Capstone queue management system scoped to the UHWI Casualty Department. QR-based patient tracking, dual admin/staff interfaces, and role-based access control with Firestore security rules.',
-      tech: ['React', 'Firebase', 'Firestore'],
-      image: images.project16,
-      liveDemo: '',
-      github: '',
-      role: 'Lead Developer',
-      awards: []
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-gray-950 text-gray-100 font-sans overflow-x-hidden">
@@ -792,115 +812,153 @@ const Portfolio = () => {
 
       <section 
         id="featured" 
-        className="py-24 fade-in-section"
+        className="py-24 fade-in-section relative overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12">
-            <div className="text-center">
-              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">My Portfolio</p>
-              <h2 className="text-4xl font-bold text-white">Featured Work</h2>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-16">
+            <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">Spotlight</p>
+            <h2 className="text-4xl font-bold text-white">Featured Works</h2>
           </div>
 
-          <div className="space-y-8">
-              <div className="relative overflow-hidden py-8">
-                <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-transparent z-10"></div>
+          <div
+            className="relative"
+            onMouseEnter={() => setIsFeaturedHovered(true)}
+            onMouseLeave={() => setIsFeaturedHovered(false)}
+          >
 
-                <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-transparent to-transparent z-10"></div>
-                
-                <div className="marquee-container flex">
-                  <div className="marquee-left flex gap-8">
-                    {[...featuredProjects, ...featuredProjects].map((project, idx) => (
-                      <div
-                        key={idx}
-                        className="glass-effect rounded-3xl overflow-hidden flex flex-col flex-shrink-0 w-[600px]"
-                      >
-                        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-blue-800 to-blue-500">
-                          {project.image && (
-                            <img 
-                              src={project.image} 
-                              alt={project.title}
-                              className="w-full h-full object-cover opacity-80"
-                            />
-                          )}
-                          <div className="absolute top-4 left-4">
-                            <span className="glass-effect-2 px-3 py-1 rounded-full text-xs font-medium text-white">
-                              {project.role}
-                            </span>
-                          </div>
-                        </div>
+            {/* Slide track */}
+            <div className="relative">
+              <div
+                className="flex transition-transform duration-700 ease-out"
+                style={{ transform: `translateX(-${currentFeatured * 100}%)` }}
+              >
+                {featuredProjects.map((project, idx) => {
+                  const projectNumber = String(idx + 1).padStart(2, '0');
+                  return (
+                    <div key={idx} className="min-w-full px-4 sm:px-12 lg:px-20">
+                      <div className="max-w-7xl mx-auto">
+                        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[500px]">
 
-                        <div className="p-6 space-y-3 flex-1 flex flex-col">
-                          <div>
-                            <h3 className="text-xl font-bold text-white mb-1">
-                              {project.title}
-                            </h3>
-                            <p className="text-blue-400 text-xs font-medium">
-                              {project.tagline}
-                            </p>
-                          </div>
-
-                          <p className="text-gray-300 text-sm leading-relaxed font-regular line-clamp-4">
-                            {project.description}
-                          </p>
-
-                          {project.awards && project.awards.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5">
-                              {project.awards.map((award, i) => (
-                                <span 
-                                  key={i}
-                                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-yellow-500/10 text-yellow-400 text-xs rounded-full font-medium border border-yellow-500/20"
-                                >
-                                  <Award size={10} />
-                                  {award}
-                                </span>
-                              ))}
+                          {/* Visual side */}
+                          <div className="relative group">
+                            <div className="absolute -top-16 -left-4 text-[10rem] font-bold text-blue-500/[0.07] select-none pointer-events-none leading-none z-0">
+                              {projectNumber}
                             </div>
-                          )}
 
-                          <div className="flex flex-wrap gap-1.5">
-                            {project.tech.slice(0, 4).map((tech, i) => (
-                              <span 
-                                key={i}
-                                className="px-2.5 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-full font-medium border border-blue-500/20"
-                              >
-                                {tech}
-                              </span>
-                            ))}
+                            <div className="relative rounded-3xl overflow-hidden glass-effect aspect-[4/3] z-10 shadow-2xl">
+                              {project.video ? (
+                                <video
+                                  src={project.video}
+                                  autoPlay
+                                  muted
+                                  loop
+                                  playsInline
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : project.image ? (
+                                <img
+                                  src={project.image}
+                                  alt={project.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full bg-gradient-to-br from-blue-800 to-blue-500 flex items-center justify-center">
+                                  <span className="text-white/40 text-3xl font-bold">{project.title}</span>
+                                </div>
+                              )}
+
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
+
+                              <div className="absolute top-6 left-6">
+                                <span className="glass-effect-2 px-4 py-2 rounded-full text-xs font-medium text-white">
+                                  {project.role}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="absolute -bottom-10 -right-10 w-64 h-64 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-3xl pointer-events-none -z-10"></div>
                           </div>
 
-                          <div className="flex flex-wrap gap-2 pt-2 mt-auto">
-                            {project.liveDemo && (
-                              <a
-                                href={project.liveDemo}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="glass-effect-2 px-4 py-2 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-1.5 text-xs"
-                              >
-                                <Globe size={14} />
-                                Demo
-                              </a>
+                          {/* Content side */}
+                          <div className="space-y-6">
+                            <div>
+                              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-3">
+                                Project {projectNumber}
+                              </p>
+                              <h3 className="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
+                                {project.title}
+                              </h3>
+                              <p className="text-2xl text-blue-400 font-medium">
+                                {project.tagline}
+                              </p>
+                            </div>
+
+                            <p className="text-gray-300 text-base md:text-lg leading-relaxed font-regular">
+                              {project.description}
+                            </p>
+
+                            {project.awards && project.awards.length > 0 && (
+                              <div className="flex flex-wrap gap-2">
+                                {project.awards.map((award, i) => (
+                                  <span
+                                    key={i}
+                                    className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 text-yellow-400 text-sm rounded-full font-medium border border-yellow-500/20"
+                                  >
+                                    <Award size={14} />
+                                    {award}
+                                  </span>
+                                ))}
+                              </div>
                             )}
-                            {project.github && (
-                              <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="glass-effect-2 px-4 py-2 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-1.5 text-xs"
-                              >
-                                <Github size={14} />
-                                Code
-                              </a>
-                            )}
+
+                            <div>
+                              <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Built With</p>
+                              <div className="flex flex-wrap gap-2">
+                                {project.tech.map((tech, i) => (
+                                  <span
+                                    key={i}
+                                    className="px-4 py-1.5 bg-blue-500/10 text-blue-400 text-sm rounded-full font-medium border border-blue-500/20"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 pt-4">
+                              {project.liveDemo && (
+                                <a
+                                  href={project.liveDemo}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold inline-flex items-center gap-2 hover:scale-105"
+                                >
+                                  <Globe size={18} />
+                                  View Live Demo
+                                </a>
+                              )}
+                              {project.github && (
+                                <a
+                                  href={project.github}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="glass-effect-2 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-2"
+                                >
+                                  <Github size={18} />
+                                  View Code
+                                </a>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  );
+                })}
               </div>
+            </div>
           </div>
         </div>
       </section>
@@ -997,7 +1055,7 @@ const Portfolio = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {['app', 'web', 'ui', 'design'].map((category) => (
+            {['web', 'ui', 'design'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
