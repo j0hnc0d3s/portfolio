@@ -16,11 +16,11 @@ import project8 from '../assets/images/projects/project8.png';
 import project9 from '../assets/images/projects/project9.png';
 import project10 from '../assets/images/projects/project10.png';
 import project11 from '../assets/images/projects/project11.png';
-import project12 from '../assets/images/projects/project12.png';
-import project13 from '../assets/images/projects/project13.png';
+import project12 from '../assets/images/projects/project12.jpg';
+import project13 from '../assets/images/projects/project13.jpg';
 import project14 from '../assets/images/projects/project14.png';
 import project15 from '../assets/images/projects/project15.png';
-import project16 from '../assets/images/projects/project16.png';
+import project16 from '../assets/images/projects/project16.jpg';
 
 export default { 
     image1,
