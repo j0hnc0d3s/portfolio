@@ -1,45 +1,74 @@
-/* Animation keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ──────────────────────────────────────────────────────────────
+   Animations — warm minimalist edition
+   Motion is gentle. Things settle in, they don't perform arriving.
+   ────────────────────────────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+@keyframes fadeUpSubtle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Fade in section animation */
+@keyframes blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes scrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes breath {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+/* Scroll-reveal — fade in on intersection */
 .fade-in-section {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in-section.animate-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Staggered children for grouped reveals */
+.fade-in-section.animate-in .stagger > * {
+  animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.fade-in-section.animate-in .stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.fade-in-section.animate-in .stagger > *:nth-child(2) { animation-delay: 0.15s; }
+.fade-in-section.animate-in .stagger > *:nth-child(3) { animation-delay: 0.25s; }
+.fade-in-section.animate-in .stagger > *:nth-child(4) { animation-delay: 0.35s; }
+.fade-in-section.animate-in .stagger > *:nth-child(5) { animation-delay: 0.45s; }
+.fade-in-section.animate-in .stagger > *:nth-child(6) { animation-delay: 0.55s; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-in-section { opacity: 1; transform: none; }
 }

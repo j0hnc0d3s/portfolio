@@ -2,43 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('./assets/fonts/fonts.css');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Geist:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @import url('./styles/animations.css');
 @import url('./styles/utilities.css');
 
+:root {
+  /* ── Paper — now dark. Hierarchy: paper (deepest) → paper-deep
+        (subtly lifted) → cream (most lifted, top-level cards). ── */
+  --paper:        #0E0E0D;   /* page bg, deepest */
+  --paper-deep:   #161614;   /* slight lift — embedded surfaces */
+  --cream:        #1F1F1E;   /* top-level cards, lifted */
+
+  /* ── Ink — now light. Same three weights, inverted. ── */
+  --ink:          #F4F2ED;   /* primary text */
+  --ink-muted:    #A8A6A0;   /* secondary text */
+  --ink-soft:     #6E6C68;   /* tertiary, captions */
+
+  /* ── "Sage" — italic em accent + active states (variable names
+        kept so App.js doesn't need changes). ── */
+  --sage:         #E8E6E1;   /* near-white — active nav fill */
+  --sage-deep:    #F4F2ED;   /* white — same as ink, italic differentiates */
+  --sage-soft:    #2A2A28;   /* dark surface — subtle pill bg */
+
+  /* ── "Amber" — awards still POP, but now via inverted light tag ── */
+  --amber:        #F4F2ED;
+  --amber-deep:   #0E0E0D;   /* dark text on light award tag */
+  --amber-soft:   #F4F2ED;   /* light bg for award tags */
+
+  /* ── Taupe → grays ── */
+  --taupe:        #6E6C68;
+  --taupe-soft:   #2A2A28;
+
+  /* ── Glass — dark tinted ── */
+  --glass-cream:  rgba(31, 31, 30, 0.7);
+  --glass-paper:  rgba(14, 14, 13, 0.55);
+  --glass-border: rgba(244, 242, 237, 0.1);
+
+  /* ── Rules and focus ring (light on dark) ── */
+  --rule:         rgba(244, 242, 237, 0.08);
+  --rule-strong:  rgba(244, 242, 237, 0.2);
+  --focus-ring:   rgba(244, 242, 237, 0.15);
+
+  /* ── Fonts ── */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
 body {
-  font-family: 'Gilroy', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.55;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Film grain — screened onto the dark bg so noise reads as flecks of light */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Faint inverse vignette — soft halo top-left, glow bottom-right */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 8% 4%, rgba(244, 242, 237, 0.04) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 65% at 96% 96%, rgba(244, 242, 237, 0.035) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
 }
 
-.font-bold {
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 700;
-}
+/* Reset display font weight aliases */
+.font-bold     { font-family: var(--font-display); font-weight: 500; }
+.font-semibold { font-family: var(--font-display); font-weight: 500; }
+.font-medium   { font-family: var(--font-body);    font-weight: 500; }
+.font-regular  { font-family: var(--font-body);    font-weight: 400; }
+.font-light    { font-family: var(--font-body);    font-weight: 300; }
 
-.font-semibold {
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 600;
-}
-
-.font-medium {
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 500;
-}
-
-.font-regular {
-  font-family: 'Gilroy', sans-serif;
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
   font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.05;
 }
 
-.font-light {
-  font-family: 'Gilroy', sans-serif;
-  font-weight: 300;
+p { color: var(--ink); }
+
+a { color: inherit; text-decoration: none; }
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
 }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--paper); }
+::-webkit-scrollbar-thumb { background: var(--taupe-soft); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--taupe); }

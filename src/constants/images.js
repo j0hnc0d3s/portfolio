@@ -15,12 +15,13 @@ import project7 from '../assets/images/projects/project7.png';
 import project8 from '../assets/images/projects/project8.png';
 import project9 from '../assets/images/projects/project9.png';
 import project10 from '../assets/images/projects/project10.png';
-import project11 from '../assets/images/projects/project11.png';
+import projectCrime from '../assets/images/projects/projectCrime.png';
 import project12 from '../assets/images/projects/project12.jpg';
-import project13 from '../assets/images/projects/project13.jpg';
+import projectJamGo from '../assets/images/projects/projectJamGo.png';
 import project14 from '../assets/images/projects/project14.png';
 import project15 from '../assets/images/projects/project15.png';
 import project16 from '../assets/images/projects/project16.jpg';
+import me from '../assets/images/projects/me.png';
 
 export default { 
     image1,
@@ -39,10 +40,11 @@ export default {
     project8,
     project9,
     project10,
-    project11,
+    projectCrime,
     project12,
-    project13,
+    projectJamGo,
     project14,
     project15,
-    project16
+    project16,
+    me
 };

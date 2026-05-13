@@ -1,22 +1,42 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Home, User, Briefcase, Settings, Mail, Instagram, Linkedin, Github, LinkIcon, ChevronLeft, ChevronRight, BriefcaseBusiness, Award, Download, Cpu, Layers, Zap, Globe, Smartphone, Link, Share2, MapPin, Phone, Send } from 'lucide-react';
+import {
+  Menu, X, Mail, Linkedin, Github, LinkIcon,
+  ChevronLeft, ChevronRight, Download, MapPin, Phone, Send, Award,
+  ArrowUpRight, GraduationCap, Sparkles, Camera
+} from 'lucide-react';
 
-import {images, icons} from './constants';
-
+import { images, icons } from './constants';
 import './App.css';
 
 const Portfolio = () => {
+  // ── State ───────────────────────────────────────────────────────────
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [activeSkill, setActiveSkill] = useState('frontend');
+  const [activeSection, setActiveSection] = useState('about');
   const [scrollY, setScrollY] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentFeatured, setCurrentFeatured] = useState(0);
+  const [isFeaturedHovered, setIsFeaturedHovered] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [filter, setFilter] = useState('app');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: '', email: '', subject: '', message: ''
   });
+
+  const observerRef = useRef(null);
+
+  // ── Data ────────────────────────────────────────────────────────────
+  const titles = [
+    'Software Engineer',
+    'Quality Assurance Tester',
+    'System Analyst',
+    'Frontend Developer',
+    'UI/UX Designer',
+    'Web and Application Developer'
+  ];
 
   const featuredProjects = [
     {
@@ -76,151 +96,64 @@ const Portfolio = () => {
     }
   ];
 
-  const [displayedText, setDisplayedText] = useState('');
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const observerRef = useRef(null);
-
-  const [contactMousePos, setContactMousePos] = useState({ x: 0, y: 0 });
-
-  const [currentFeatured, setCurrentFeatured] = useState(0);
-
-  const [isFeaturedHovered, setIsFeaturedHovered] = useState(false);
-
-  useEffect(() => {
-    if (isFeaturedHovered) return;
-    
-    const interval = setInterval(() => {
-      setCurrentFeatured((prev) => (prev + 1) % featuredProjects.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, [isFeaturedHovered, currentFeatured, featuredProjects.length]);
-
-  const nextFeatured = () => {
-    setCurrentFeatured((prev) => (prev + 1) % featuredProjects.length);
-  };
-
-  const prevFeatured = () => {
-    setCurrentFeatured((prev) => (prev - 1 + featuredProjects.length) % featuredProjects.length);
-  };
-
-  const handleContactMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setContactMousePos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    });
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-      
-      const sections = ['home', 'about', 'featured', 'carousel', 'qualification', 'services', 'skills', 'works', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-
-      for (const section of sections) {
-        const element = document.getElementById(section);
-
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setMousePosition({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    });
-  };
-
-  useEffect(() => {
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
-    );
-
-    document.querySelectorAll('.fade-in-section').forEach((el) => {
-      observerRef.current?.observe(el);
-    });
-
-    return () => observerRef.current?.disconnect();
-  }, []);
-
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
-  };
-
-  const getScatterPosition = (index) => {
-    const positions = [
-      { x: -50, y: -30, rotate: -15 },
-      { x: 40, y: -30, rotate: -120 },
-      { x: -50, y: 80, rotate: 175 },
-      { x: -40, y: 60, rotate: -75 }
-    ];
-    return positions[index % positions.length];
-  };
-
-  useEffect(() => {
-    const currentTitle = titles[currentTitleIndex];
-    const typingSpeed = isDeleting ? 50 : 100;
-    const pauseBeforeDelete = 2000;
-
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        if (displayedText.length < currentTitle.length) {
-          setDisplayedText(currentTitle.slice(0, displayedText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), pauseBeforeDelete);
-        }
-      } else {
-        if (displayedText.length > 0) {
-          setDisplayedText(displayedText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
-        }
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [displayedText, isDeleting, currentTitleIndex]);
-
-  const titles = [
-    'Software Engineer',
-    'Quality Assurance Tester',
-    'System Analyst',
-    'Frontend Developer',
-    'UI/UX Designer',
-    'Web and Application Developer'
+  const carouselItems = [
+    {
+      title: 'UWI Student Awards',
+      role: 'In Honour of the Work for Japan Club',
+      description: 'Awarded for astounding work in cultural events and managing club communications',
+      image: images.image1,
+    },
+    {
+      title: 'Vincent Hosang Competition',
+      role: '2nd Place with Multiple Awards',
+      description: 'Created an agricultural e-commerce application to help in the interconnectivity of consumers and farmers with the value proposition being food grading',
+      image: images.image5,
+    },
+    {
+      title: 'Hackathon',
+      role: 'Participant showcasing Medic App',
+      description: 'Built a modern application to help with appointment booking at UWI Hospital and other private entities — allocating priority care and making the waiting process more bearable',
+      image: images.image6,
+    },
+    {
+      title: 'Winners Trip to NY, USA',
+      role: '2nd Place Representatives',
+      description: 'Met with entrepreneurs across the diaspora to showcase our business idea, and learn from our predecessors',
+      image: images.image2,
+    },
+    {
+      title: 'Emperor\'s Dinner at Pegasus',
+      role: 'Invited as representatives of the Japan Club',
+      description: 'In recognition of our exemplary cultural work, and blooming relationship with the Embassy of Japan in Jamaica, we were invited by the Ambassador to the Emperor\'s Dinner',
+      image: images.image3,
+    },
+    {
+      title: 'FSTGC Awards',
+      role: 'Invited as a member of the 2023/2024 FST Guild Committee',
+      description: 'Invited to a night of splendour in recognition of all the members of the guild committee, past and present',
+      image: images.image4,
+    },
   ];
+
+  const works = [
+    { id: 0, title: 'app' },
+    { id: 1, title: 'ui' },
+    { id: 2, title: 'design' },
+  ];
+
+  const projects = [
+    { title: 'Movie Renting Web Application', description: 'A web application that shows different movies you can rent.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-lab5', image: images.project8 },
+    { title: 'Social Media Web App', description: 'A collaborative final project for a web development course.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-project2', image: images.project7 },
+    { title: 'Property Renting Web App', description: 'An app that showcases various properties and related information with contact capabilities.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-project1', image: images.project4 },
+    { title: 'Peli-Plan', description: 'A campus navigation application.', category: 'app', link: 'https://drive.google.com/file/d/1q7jiil6SqVr9LAryNveosBgZuSd3t0_L/view?usp=drive_link', image: images.project16 },
+    { title: 'Jam-Go', description: 'An island-wide transit app that incorporates both taxi and bus transportation.', category: 'app', link: 'https://drive.google.com/file/d/1kGs69HkV7CJ5oby4AgeJBe91JmZTCglD/view?usp=drive_link', image: images.projectJamGo },
+    { title: 'Club', description: 'A showcase of my designs done during my tenure with the UWI Japan Club.', category: 'design', link: 'https://drive.google.com/drive/folders/1UR8ucK7KTVspJmV4abj89uIeD3guHEoO?usp=sharing', image: images.project9 },
+    { title: 'Guild', description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', category: 'design', link: 'https://drive.google.com/drive/folders/1MLvWugbG3cSrIVdehqeZ6FHpCl3rX-gG?usp=drive_link', image: images.project3 },
+    { title: 'Companies', description: 'A showcase of my designs done during my tenure across various positions outside the Japan Club and the Faculty Guild.', category: 'design', link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing', image: images.project10 },
+    { title: 'Crime.net', description: 'A UX/UI concept for a community-driven public safety mobile application.', category: 'ui', link: 'https://www.figma.com/proto/N5SCKacw2dcaCbijAUKca4/Crime.net?node-id=33-508', image: images.projectCrime },
+  ];
+
+  const filteredProjects = filter === '' ? projects : projects.filter(p => p.category === filter);
 
   const frontendSkills = [
     { name: 'HTML5', icon: icons.html },
@@ -240,1113 +173,773 @@ const Portfolio = () => {
     { name: 'Flask', icon: icons.flask },
   ];
 
-  const carouselItems = [
-    {
-      title: 'UWI Student Awards',
-      role: 'In Honour of the Work for Japan Club',
-      description: 'Awarded for astounding work in cultural events and managing club communications',
-      image: images.image1,
-    },
-    {
-      title: 'Vincent Hosang Competition',
-      role: '2nd Place w Mutliple Awards',
-      description: 'Created an agricultural e-commerce application to help in the interconnectivity of consumers and farmers with the value proposition being food grading',
-      image: images.image5,
-    },
-    {
-      title: 'Hackathon',
-      role: 'Participant showcasing Medic App',
-      description: 'Built a modern application to help with appointment booking at UWI Hospital, and other private entities, to help in allocating priotity care, and speeding up the waiting process/making it more bareable',
-      image: images.image6,
-    },
-    {
-      title: 'Winners Trip to NY, USA',
-      role: '2nd Place Representatives',
-      description: 'Meet with entrepeneurs across the diaspora to showcase our business idea, and learn from our predecessors',
-      image: images.image2,
-    },
-    {
-      title: 'Emperor`s Dinner at Pegasus',
-      role: 'Invited as representatives of the Japan Club',
-      description: 'In recognition of our exemplary cultural work, and blooming relationship with the Embassy of Japan in Jamaica, we were invited by the Embassador to the Emperor`s Dinner',
-      image: images.image3,
-    },
-    {
-      title: 'FSTGC Awards',
-      role: 'Invited as a member of the 2023/2024 FST Guild Committee',
-      description: 'Invited to a night of splendor in recognition of all the members of the guild committee past, and present',
-      image: images.image4,
-    },
-  ];
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + carouselItems.length) % carouselItems.length);
-  };
-
-  const works = [
-    {
-      id: 0,
-      title: 'app',
-    },
-    {
-      id: 1,
-      title: 'web',
-    },
-    {
-      id: 2,
-      title: 'ui',
-    },
-    {
-      id: 3,
-      title: 'design',
-    },
-  ];
-
-  const projects = [
-    { 
-      title: 'Movie Renting Web Application', 
-      description: 'A web application that shows different movies you can rent.', 
-      category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-lab5',
-      image: images.project8,  
-    },
-    { 
-      title: 'Social Media Web App', 
-      description: 'A colloborative final project for a web development course.', 
-      category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-project2',
-      image: images.project7,  
-    },
-    { 
-      title: 'Property Renting Web App', 
-      description: 'A app that showcases various properties and related information with contact capabilities.', 
-      category: 'web', 
-      link: 'https://github.com/j0hnc0d3s/info3180-project1',
-      image: images.project4,  
-    },
-    { 
-      title: 'Peli-Plan', 
-      description: 'A campus navigation application.', 
-      category: 'app', 
-      link: 'https://drive.google.com/file/d/1q7jiil6SqVr9LAryNveosBgZuSd3t0_L/view?usp=drive_link',
-      image: images.project16,  
-    },
-    { 
-      title: 'Jam-Go', 
-      description: 'A island-wide transit app that incorporates both taxi and bus tranportation', 
-      category: 'app', 
-      link: 'https://drive.google.com/file/d/1kGs69HkV7CJ5oby4AgeJBe91JmZTCglD/view?usp=drive_link',
-      image: images.project13,  
-    },
-    { 
-      title: 'Autocare', 
-      description: 'A car-care and rental application.', 
-      category: 'app', 
-      link: 'https://drive.google.com/file/d/13cnUgV3gv8H5iQDF28lPVkG4nFxcuOp_/view?usp=drive_link',
-      image: images.project12,  
-    },
-    { 
-      title: 'Club', 
-      description: 'A showcase of my designs done during my tenure with the UWI Japan Club.', 
-      category: 'design', 
-      link: 'https://drive.google.com/drive/folders/1UR8ucK7KTVspJmV4abj89uIeD3guHEoO?usp=sharing',
-      image: images.project9,  
-    },
-    { 
-      title: 'Guild', 
-      description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', 
-      category: 'design',
-      link: 'https://drive.google.com/drive/folders/1MLvWugbG3cSrIVdehqeZ6FHpCl3rX-gG?usp=drive_link',
-      image: images.project3,  
-    },
-    { 
-      title: 'Companies', 
-      description: 'A showcase of my designs done during my tenure across various positions outside the Japan Club, and the Faculty Guild.', 
-      category: 'design',
-      link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing',
-      image: images.project10,  
-    },
-    { 
-      title: 'Crime.net', 
-      description: 'Crime.net is a UX/UI concept for a community-driven public safety mobile application.', 
-      category: 'ui',
-      link: 'https://www.figma.com/proto/N5SCKacw2dcaCbijAUKca4/Crime.net?node-id=33-508&t=Yye1hnvWIl80OaUM-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=183%3A233',
-      image: images.project11,  
-    },
-  ];
-
-  const [filter, setFilter] = useState('web');
-  const filteredProjects = filter === '' ? projects : projects.filter(p => p.category === filter);
-
-  const handleFormChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      const response = await fetch('https://formspree.io/f/xayzgepq', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      
-      if (response.ok) {
-        alert('Message sent successfully!');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      }
-    } catch (error) {
-      alert('Error sending message. Please try again.');
-    }
-  };
-
-  const navigation = [
-    { 
-      id: 'about', 
-      label: 'About'
-    },
-    { 
-      id: 'featured', 
-      label: 'Featured'
-    },
-    { 
-      id: 'contact', 
-      label: 'Contact'
-    }
-  ];
-
-  const contacts = [
-    { 
-      icon: Phone, 
-      title: 'Call Me', 
-      content: '+1 (876)-208-2517',
-      link: 'tel:+18762082517'
-    },
-    { 
-      icon: Mail, 
-      title: 'Email Me', 
-      content: 'josiahjohngreen@gmail.com',
-      link: 'mailto:josiahjohngreen@gmail.com'
-    },
-    { 
-      icon: MapPin, 
-      title: 'Location', 
-      content: 'Kingston, Jamaica',
-      link: null
-    }
+  const career = [
+    { title: 'Content Strategist', org: 'Faculty of Science and Technology', date: 'Jan 2025 — May 2026' },
+    { title: 'Technical Support Intern', org: 'Mona School of Business & Management', date: 'Aug 2025 — Jun 2026' },
+    { title: 'Junior Software Engineer Intern', org: 'Push Technology Limited', date: 'Jun 2025 — Aug 2025' },
+    { title: 'System Analyst Intern', org: 'Port Authority of Jamaica', date: 'Jun 2023 — Aug 2023' },
   ];
 
   const positions = [
-    { 
-      title: 'Secretary', 
-      org: 'The UWI Japan Club', 
-      date: 'September 2024 - May 2025' 
-    },
-    { 
-      title: 'Assistant Vice President', 
-      org: 'The UWI Japan Club',
-      date: 'February 2022 - May 2025' 
-    },
-    { 
-      title: 'Public Relations Officer', 
-      org: 'The UWI Japan Club', 
-      date: 'November 2022 - May 2025' 
-    },
-    { 
-      title: 'Publications Chairman',
-      org: 'Faculty of Science and Technology Guild', 
-      date: 'June 2023 - June 2024' 
-    },
+    { title: 'Secretary', org: 'The UWI Japan Club', date: 'Sep 2024 — May 2025' },
+    { title: 'Assistant Vice President', org: 'The UWI Japan Club', date: 'Feb 2022 — May 2025' },
+    { title: 'Public Relations Officer', org: 'The UWI Japan Club', date: 'Nov 2022 — May 2025' },
+    { title: 'Publications Chairman', org: 'Faculty of Science and Technology Guild', date: 'Jun 2023 — Jun 2024' },
   ];
 
-  const career = [
-    { 
-      title: 'Content Strategist', 
-      org: 'Faculty of Science and Technology', 
-      date: 'January 2025 - May 2026' 
-    },
-    { 
-      title: 'Technical Support Intern', 
-      org: 'Mona School of Business & Management', 
-      date: 'August 2025 - June 2026' 
-    },
-    { 
-      title: 'Junior Software Engineer Intern', 
-      org: 'Push Technology Limited',
-      date: 'June 2025 - August 2025' 
-    },
-    { 
-      title: 'System Analyst Intern', 
-      org: 'Port Authority of Jamaica',
-      date: 'June 2023 - August 2023' 
-    },
+  const contacts = [
+    { icon: Linkedin, title: 'LinkedIn', content: 'Josiah-John Green', link: 'https://www.linkedin.com/in/josiah-john-green/' },
+    { icon: Mail,  title: 'Email', content: 'josiahjohngreen@gmail.com', link: 'mailto:josiahjohngreen@gmail.com' },
+    { icon: MapPin, title: 'Based', content: 'Kingston, Jamaica', link: null }
   ];
 
   const socials = [
-    { 
-      icon: LinkIcon, 
-      link: 'https://3urek4.vercel.app/' 
-    },
-    { 
-      icon: Linkedin, 
-      link: 'https://www.linkedin.com/in/josiah-john-green/' 
-    },
-    { 
-      icon: Github, 
-      link: 'https://github.com/j0hnc0d3s' 
-    }
+    { icon: LinkIcon, link: 'https://3urek4.vercel.app/', label: '3urek4' },
+    { icon: Linkedin, link: 'https://www.linkedin.com/in/josiah-john-green/', label: 'LinkedIn' },
+    { icon: Github,   link: 'https://github.com/j0hnc0d3s', label: 'GitHub' }
   ];
 
   const information = [
-    { 
-      label: 'Name', 
-      value: 'Josiah-John Green' 
-    },
-    { 
-      label: 'Age', 
-      value: '23 Years' 
-    },
-    { 
-      label: 'From', 
-      value: 'Kingston, Jamaica' 
-    },
-    { 
-      label: 'Email', 
-      value: 'josiahjohngreen@gmail.com' 
-    }
+    { label: 'Name',  value: 'Josiah-John Green' },
+    { label: 'Age',   value: '23' },
+    { label: 'Based', value: 'Kingston, Jamaica' },
+    { label: 'Email', value: 'josiahjohngreen@gmail.com' }
   ];
 
-  const skills = {
-    frontend: [
-      { 
-        name: 'HTML', 
-        level: 80
-      },
-      { 
-        name: 'CSS', 
-        level: 80 
-      },
-      { 
-        name: 'JavaScript',
-        level: 70 
+  const navigation = [
+    { id: 'about',    label: 'About' },
+    { id: 'featured', label: 'Work' },
+    { id: 'contact',  label: 'Contact' }
+  ];
+
+  // ── Effects ─────────────────────────────────────────────────────────
+
+  // Typing animation
+  useEffect(() => {
+    const currentTitle = titles[currentTitleIndex];
+    const typingSpeed = isDeleting ? 45 : 95;
+    const pauseBeforeDelete = 2000;
+
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (displayedText.length < currentTitle.length) {
+          setDisplayedText(currentTitle.slice(0, displayedText.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), pauseBeforeDelete);
+        }
+      } else {
+        if (displayedText.length > 0) {
+          setDisplayedText(displayedText.slice(0, -1));
+        } else {
+          setIsDeleting(false);
+          setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
+        }
       }
-    ],
-    webapp: [
-      { 
-        name: 'React', 
-        level: 90 
-      },
-      { 
-        name: 'VueJS', 
-        level: 70 
-      },
-      { 
-        name: 'Flask', 
-        level: 70 
+    }, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, currentTitleIndex]);
+
+  // Scroll tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      const sections = ['about', 'featured', 'works', 'carousel', 'skills', 'contact'];
+      const scrollPosition = window.scrollY + 120;
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const { offsetTop, offsetHeight } = el;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
       }
-    ],
-    design: [
-      { 
-        name: 'Canva', 
-        level: 90 
-      },
-      { 
-        name: 'Photoshop', 
-        level: 90 
-      }
-    ],
-    backend: [
-      { 
-        name: 'Python', 
-        level: 70 
-      },
-      { 
-        name: 'Java', 
-        level: 60 
-      },
-      {
-        name: 'PHP', 
-        level: 60 
-      },
-      { 
-        name: 'MySQL', 
-        level: 70 
-      },
-      { 
-        name: 'PostgreSQL', 
-        level: 80 
-      }
-    ]
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Featured auto-cycle
+  useEffect(() => {
+    if (isFeaturedHovered) return;
+    const interval = setInterval(() => {
+      setCurrentFeatured((prev) => (prev + 1) % featuredProjects.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [isFeaturedHovered, currentFeatured, featuredProjects.length]);
+
+  // Fade-in observer
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('animate-in');
+      }),
+      { threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
+    );
+    document.querySelectorAll('.fade-in-section').forEach((el) => observerRef.current?.observe(el));
+    return () => observerRef.current?.disconnect();
+  }, []);
+
+  // ── Handlers ────────────────────────────────────────────────────────
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+      setIsMenuOpen(false);
+    }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-blue-950 to-gray-950 text-gray-100 font-sans overflow-x-hidden">
+  const nextSlide     = () => setCurrentSlide((p) => (p + 1) % carouselItems.length);
+  const prevSlide     = () => setCurrentSlide((p) => (p - 1 + carouselItems.length) % carouselItems.length);
+  const nextFeatured  = () => setCurrentFeatured((p) => (p + 1) % featuredProjects.length);
+  const prevFeatured  = () => setCurrentFeatured((p) => (p - 1 + featuredProjects.length) % featuredProjects.length);
 
-      <nav className="glass-nav fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <a href="/#about" className="text-3xl font-bold">
-              <span className="text-gradient">John</span>
-            </a>
-            
-            <div className="hidden md:flex space-x-8">
-              {navigation.map(({ id, label }) => (
+  const handleFormChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('https://formspree.io/f/xayzgepq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (response.ok) {
+        alert('Message sent — I\'ll be in touch soon.');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }
+    } catch {
+      alert('Couldn\'t send. Try again, or email me directly.');
+    }
+  };
+
+  // ── Render ──────────────────────────────────────────────────────────
+  return (
+    <div className="App relative min-h-screen">
+
+      {/* ═════ Nav ═════ */}
+      <nav className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+        scrollY > 40 ? 'top-4' : 'top-6'
+      }`}
+        style={{ width: 'min(720px, calc(100% - 2rem))' }}
+      >
+        <div className="glass-nav rounded-full px-5 py-2.5 flex items-center justify-between gap-4">
+          <a href="#about"
+             onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
+             className="display text-xl"
+             style={{ fontWeight: 500, letterSpacing: '-0.02em' }}
+          >
+            John<em style={{ fontStyle: 'italic', color: 'var(--sage-deep)' }}>.</em>
+          </a>
+
+          <div className="hidden md:flex items-center gap-1">
+            {navigation.map(({ id, label }) => {
+              const active = activeSection === id;
+              return (
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
-                  className={`flex items-center space-x-2 transition-all duration-300 ${
-                    activeSection === id 
-                      ? 'text-blue-400 scale-110' 
-                      : 'text-gray-300 hover:text-white hover:scale-105'
-                  }`}
+                  className="px-3.5 py-1.5 rounded-full text-sm transition-all duration-300"
+                  style={{
+                    background: active ? 'var(--sage)' : 'transparent',
+                    color: active ? 'var(--cream)' : 'var(--ink-muted)',
+                  }}
                 >
-                  <span className="font-medium">{label}</span>
+                  {label}
                 </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden text-blue-400 hover:text-blue-300 transition-colors"
-            >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+              );
+            })}
           </div>
+
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-1.5 rounded-full transition-colors"
+            style={{ color: 'var(--ink)' }}
+            aria-label="Menu"
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden glass-effect border-t border-gray-800">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map(({ id, label }) => (
-                <button
-                  key={id}
-                  onClick={() => scrollToSection(id)}
-                  className="flex items-center space-x-3 w-full px-3 py-2 text-blue-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                >
-                  <span>
-                    {label}
-                  </span>
-                </button>
-              ))}
-            </div>
+          <div className="md:hidden mt-2 glass-cream rounded-2xl p-3">
+            {navigation.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => scrollToSection(id)}
+                className="block w-full text-left px-4 py-3 rounded-xl text-sm transition-colors"
+                style={{ color: 'var(--ink)', background: 'transparent' }}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         )}
       </nav>
 
-      <section 
-        id="about" 
-        className="min-h-screen flex items-center pt-20 relative overflow-hidden"
-        onMouseMove={handleMouseMove}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-        
-        <div 
-          className="absolute w-96 h-96 rounded-full pointer-events-none transition-opacity duration-300"
-          style={{
-            left: `${mousePosition.x}px`,
-            top: `${mousePosition.y}px`,
-            transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(168, 85, 247, 0.2) 30%, transparent 70%)',
-            filter: 'blur(50px)',
-            opacity: mousePosition.x === 0 && mousePosition.y === 0 ? 0 : 1
-          }}
-        />
-          
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="space-y-6">
-              <p className="text-lg text-blue-400 font-bold">Hello</p>
-              
-              <h1 className="text-5xl md:text-7xl font-bold leading-tight">
-                <span className="text-gradient hover-glow inline-block">I'm John</span>
-              </h1>
+      {/* ═════ Hero / About ═════ */}
+      <section id="about" className="pt-32 pb-24 relative">
+        <div className="max-w-3xl mx-auto px-6 sm:px-8 text-center relative z-10">
 
-              <p className="text-xl md:text-2xl font-light">
-                <span className="text-white typing-cursor">A {displayedText}</span>
-              </p>
+          <div className="mono-label inline-flex items-center gap-2 mb-10" style={{ animation: 'fadeIn 0.8s ease' }}>
+            <span className="sage-dot"></span>
+            <span>Hello, world — based in Kingston</span>
+          </div>
 
-              <p className="text-gray-400 leading-relaxed max-w-xl font-medium">
-                I create user-centric digital experiences through UI/UX design, graphic design, and full-stack development. 
-                Specialized in building intuitive interfaces and scalable web and mobile applications that prioritize user engagement and satisfaction.
-              </p>
+          <h1 className="display-light mb-2"
+              style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4.75rem)', letterSpacing: '-0.03em', lineHeight: 1.05 }}>
+            Hi, I'm John <span style={{ color: 'var(--ink-soft)' }}>—</span>
+          </h1>
+          <h2 className="display-light"
+              style={{ fontSize: 'clamp(2.5rem, 6.5vw, 4.75rem)', letterSpacing: '-0.03em', lineHeight: 1.05, fontStyle: 'italic', fontWeight: 350 }}>
+            a <span className="typing-caret">{displayedText}</span>
+          </h2>
 
-              <div className="flex flex-wrap items-center gap-6 pt-4">
-                <a 
-                  href="https://docs.google.com/document/d/1pjocSQGxeevWRXKuAU8ghHsOZDAWojXl0N76VvMpI4Y/edit?tab=t.zhqluw9cyc1o/export?format=pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="glass-effect-2 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-2"
+          <p className="mt-8 mx-auto" style={{ maxWidth: '32rem', color: 'var(--ink-muted)', fontSize: '1.05rem', lineHeight: 1.6 }}>
+            Building user-centric digital experiences through UI/UX, graphic design, and full-stack development — interfaces and applications that prioritise the people who use them.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-5 mt-10">
+            <a
+              href="https://docs.google.com/document/d/1pjocSQGxeevWRXKuAU8ghHsOZDAWojXl0N76VvMpI4Y/edit?tab=t.zhqluw9cyc1o/export?format=pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ink"
+            >
+              <Download size={16} />
+              Download CV
+            </a>
+
+            <div className="flex items-center gap-3 pl-2">
+              {socials.map((s, i) => (
+                <a key={i} href={s.link} target="_blank" rel="noopener noreferrer"
+                   aria-label={s.label}
+                   className="p-2 rounded-full transition-all duration-300"
+                   style={{ color: 'var(--ink-muted)' }}
+                   onMouseEnter={(e) => e.currentTarget.style.color = 'var(--ink)'}
+                   onMouseLeave={(e) => e.currentTarget.style.color = 'var(--ink-muted)'}
                 >
-                  <Download size={20} />
-                  Download CV
+                  <s.icon size={20} />
                 </a>
-                
-                <div className="flex items-center gap-4">
-                  {socials.map((social, idx) => (
-                    <a
-                      key={idx}
-                      href={social.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-100 hover:text-blue-400 transition-all duration-300 hover:scale-125"
-                    >
-                      <social.icon size={24} />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div 
-              className="space-y-6"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="grid grid-cols-2 gap-6 py-6">
-                {information.map((item, idx) => {
-                  const position = getScatterPosition(idx);
-
-                  return (
-                    <div
-                      key={idx}
-                      className="scatter-item glass-effect-2 p-3 rounded-xl"
-                      style={{
-                        transform: isHovered 
-                          ? `translate(${position.x}px, ${position.y}px) rotate(${position.rotate}deg)`
-                          : 'translate(0, 0) rotate(0deg)'
-                      }}
-                    >
-                      <h3 className="text-blue-500 font-semibold mb-1 text-sm">
-                        {item.label}
-                      </h3>
-
-                      <p className="text-white text-xs font-regular">
-                        {item.value}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section 
-        id="carousel" 
-        className="py-24 fade-in-section relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">My Journey</p>
-            <h2 className="text-4xl font-bold text-white">Experiences & Achievements</h2>
-          </div>
-          
-          <div className="relative">
-            <div className="overflow-hidden rounded-3xl">
-              <div 
-                className="flex transition-transform duration-700 ease-out"
-                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-              >
-                {carouselItems.map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="min-w-full px-4"
-                  >
-                    <div>
-                      <div className="grid md:grid-cols-2 gap-8 p-12">
-                        <div className="flex flex-col justify-center space-y-6">
-                          <h3 className="text-3xl font-bold text-white">
-                            {item.title}
-                          </h3>
-
-                          <p className="text-lrg text-blue-400 font-medium">
-                            {item.role}
-                          </p>
-
-                          <p className="text-gray-100 text-base font-regular">
-                            {item.description}
-                          </p>
-                        </div>
-
-                        <img 
-                          src={item.image} 
-                          className="h-100 w-50 rounded-3xl opacity-30 mask-fade-all overflow-hidden"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <button
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 glass-effect p-4 rounded-full hover:bg-white/20 transition-all"
-            >
-              <ChevronLeft 
-                size={24} 
-                className="text-white"
-              />
-            </button>
-
-            <button
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 glass-effect p-4 rounded-full hover:bg-white/20 transition-all"
-            >
-              <ChevronRight 
-                size={24} 
-                className="text-white" 
-              />
-            </button>
-
-            <div className="flex justify-center gap-3 mt-3">
-              {carouselItems.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    idx === currentSlide 
-                      ? 'w-12 bg-gradient-to-r from-blue-500 to-blue-600' 
-                      : 'w-2 bg-gray-100 hover:bg-white-200'
-                  }`}
-                />
               ))}
             </div>
           </div>
+
         </div>
+
+        {/*         
+        <div className="hero-stage relative mt-16 mx-auto px-6" style={{ maxWidth: '720px' }}>
+          <div className="hero-card hero-card-tl">
+            <div className="hero-card-label flex items-center gap-1.5">
+              <Sparkles size={11} />
+              <span>Now</span>
+            </div>
+            <div className="hero-card-value">Shipping Stack at MSBM</div>
+          </div>
+
+          <div className="hero-card hero-card-tr">
+            <div className="hero-card-label flex items-center gap-1.5">
+              <Award size={11} />
+              <span>Recent</span>
+            </div>
+            <div className="hero-card-value">Intellibus Social Good 2026</div>
+          </div>
+
+          <div className="hero-card hero-card-bl">
+            <div className="hero-card-label flex items-center gap-1.5">
+              <GraduationCap size={11} />
+              <span>Studying</span>
+            </div>
+            <div className="hero-card-value">SWE — UWI Mona</div>
+          </div>
+        </div> 
+        */}
       </section>
 
-      <section 
-        id="featured" 
-        className="py-24 fade-in-section relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">Spotlight</p>
-            <h2 className="text-4xl font-bold text-white">Featured Works</h2>
+      {/* ═════ 01 — Selected work (Featured) ═════ */}
+      <section id="featured" className="py-24 fade-in-section relative">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+
+          <div className="section-marker">
+            <span className="num">01</span>
+            <span className="rule"></span>
+            <span className="mono-label">Selected work</span>
           </div>
+
+          <h2 className="display-light mb-12" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', maxWidth: '20ch' }}>
+            Things I'm <em>most</em> proud of building.
+          </h2>
 
           <div
             className="relative"
             onMouseEnter={() => setIsFeaturedHovered(true)}
             onMouseLeave={() => setIsFeaturedHovered(false)}
           >
-
-            {/* Slide track */}
-            <div className="relative">
+            <div className="overflow-hidden">
               <div
                 className="flex transition-transform duration-700 ease-out"
                 style={{ transform: `translateX(-${currentFeatured * 100}%)` }}
               >
-                {featuredProjects.map((project, idx) => {
-                  const projectNumber = String(idx + 1).padStart(2, '0');
-                  return (
-                    <div key={idx} className="min-w-full px-4 sm:px-12 lg:px-20">
-                      <div className="max-w-7xl mx-auto">
-                        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center min-h-[500px]">
+                {featuredProjects.map((project, idx) => (
+                  <div key={idx} className="min-w-full">
+                    <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center">
 
-                          {/* Visual side */}
-                          <div className="relative group">
-                            <div className="absolute -top-16 -left-4 text-[10rem] font-bold text-blue-500/[0.07] select-none pointer-events-none leading-none z-0">
-                              {projectNumber}
-                            </div>
-
-                            <div className="relative rounded-3xl overflow-hidden glass-effect aspect-[4/3] z-10 shadow-2xl">
-                              {project.video ? (
-                                <video
-                                  src={project.video}
-                                  autoPlay
-                                  muted
-                                  loop
-                                  playsInline
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : project.image ? (
-                                <img
-                                  src={project.image}
-                                  alt={project.title}
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : (
-                                <div className="w-full h-full bg-gradient-to-br from-blue-800 to-blue-500 flex items-center justify-center">
-                                  <span className="text-white/40 text-3xl font-bold">{project.title}</span>
-                                </div>
-                              )}
-
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none"></div>
-
-                              <div className="absolute top-6 left-6">
-                                <span className="glass-effect-2 px-4 py-2 rounded-full text-xs font-medium text-white">
-                                  {project.role}
-                                </span>
-                              </div>
-                            </div>
-
-                            <div className="absolute -bottom-10 -right-10 w-64 h-64 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 blur-3xl pointer-events-none -z-10"></div>
-                          </div>
-
-                          {/* Content side */}
-                          <div className="space-y-6">
-                            <div>
-                              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-3">
-                                Project {projectNumber}
-                              </p>
-                              <h3 className="text-5xl md:text-6xl font-bold text-white mb-4 leading-tight">
+                      {/* Visual side — 3/5 */}
+                      <div className="lg:col-span-3 relative">
+                        <div className="card-paper relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                          {project.image ? (
+                            <img src={project.image} alt={project.title}
+                                 className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center"
+                                 style={{ background: 'linear-gradient(135deg, var(--sage) 0%, var(--sage-deep) 100%)' }}>
+                              <span className="display" style={{ fontSize: '3rem', fontWeight: 350, color: 'var(--cream)', opacity: 0.7 }}>
                                 {project.title}
-                              </h3>
-                              <p className="text-2xl text-blue-400 font-medium">
-                                {project.tagline}
-                              </p>
+                              </span>
                             </div>
-
-                            <p className="text-gray-300 text-base md:text-lg leading-relaxed font-regular">
-                              {project.description}
-                            </p>
-
-                            {project.awards && project.awards.length > 0 && (
-                              <div className="flex flex-wrap gap-2">
-                                {project.awards.map((award, i) => (
-                                  <span
-                                    key={i}
-                                    className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-500/10 text-yellow-400 text-sm rounded-full font-medium border border-yellow-500/20"
-                                  >
-                                    <Award size={14} />
-                                    {award}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-
-                            <div>
-                              <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Built With</p>
-                              <div className="flex flex-wrap gap-2">
-                                {project.tech.map((tech, i) => (
-                                  <span
-                                    key={i}
-                                    className="px-4 py-1.5 bg-blue-500/10 text-blue-400 text-sm rounded-full font-medium border border-blue-500/20"
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-
-                            <div className="flex flex-wrap gap-4 pt-4">
-                              {project.liveDemo && (
-                                <a
-                                  href={project.liveDemo}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold inline-flex items-center gap-2 hover:scale-105"
-                                >
-                                  <Globe size={18} />
-                                  View Live Demo
-                                </a>
-                              )}
-                              {project.github && (
-                                <a
-                                  href={project.github}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="glass-effect-2 px-8 py-3 text-white rounded-full transition-all duration-300 font-semibold hover:bg-white/20 inline-flex items-center gap-2"
-                                >
-                                  <Github size={18} />
-                                  View Code
-                                </a>
-                              )}
-                            </div>
+                          )}
+                          <div className="absolute top-5 left-5">
+                            <span className="tag tag-cream">{project.role}</span>
                           </div>
                         </div>
                       </div>
+
+                      {/* Content side — 2/5 */}
+                      <div className="lg:col-span-2 space-y-5">
+                        <div>
+                          <h3 className="display-light mb-1.5" style={{ fontSize: 'clamp(2rem, 3.5vw, 2.75rem)' }}>
+                            {project.title}
+                          </h3>
+                          <p className="serif-italic" style={{ fontSize: '1.15rem', color: 'var(--sage-deep)' }}>
+                            {project.tagline}
+                          </p>
+                        </div>
+
+                        <p style={{ color: 'var(--ink-muted)', lineHeight: 1.65, fontSize: '0.95rem' }}>
+                          {project.description}
+                        </p>
+
+                        {project.awards && project.awards.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {project.awards.map((award, i) => (
+                              <span key={i} className="tag tag-amber inline-flex items-center gap-1.5">
+                                <Award size={11} />
+                                {award}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        <div className="pt-2">
+                          <div className="mono-label mb-2.5">Built with</div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.tech.map((t, i) => (
+                              <span key={i} className="tag tag-sage">{t}</span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {(project.liveDemo || project.github) && (
+                          <div className="flex flex-wrap gap-3 pt-2">
+                            {project.liveDemo && (
+                              <a href={project.liveDemo} target="_blank" rel="noopener noreferrer" className="btn btn-ink">
+                                View live <ArrowUpRight size={15} />
+                              </a>
+                            )}
+                            {project.github && (
+                              <a href={project.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                                <Github size={15} /> Code
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section 
-        id="qualification" 
-        className="py-24 fade-in-section"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider mb-2">My Journey</p>
-            <h2 className="text-4xl font-bold text-white">Qualifications</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="glass-effect rounded-3xl p-8 card-hover">
-              <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
-                  <BriefcaseBusiness size={24} />
-                </div>
-
-                Experience
-              </h3>
-
-              <div className="space-y-8">
-                {career.map((position, idx) => (
-                  <div 
-                    key={idx} 
-                    className="relative"
-                  >
-                    <h4 className="text-lg font-regular text-white">
-                      {position.title}
-                    </h4>
-                    
-                    <p className="text-gray-300 font-regular text-sm">
-                      {position.org}
-                    </p>
-
-                    <p className="text-blue-400 text-sm mt-1 font-medium">
-                      {position.date}
-                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="glass-effect rounded-3xl p-8 card-hover">
-              <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
-                  <Award size={24} />
-                </div>
-
-                Positions
-              </h3>
-
-              <div className="space-y-8">
-                {positions.map((position, idx) => (
-                  <div 
-                    key={idx} 
-                    className="relative"
-                  >
-                    <h4 className="text-lg font-regular text-white">
-                      {position.title}
-                    </h4>
-                    
-                    <p className="text-gray-300 font-regular text-sm">
-                      {position.org}
-                    </p>
-
-                    <p className="text-blue-400 text-sm mt-1 font-medium">
-                      {position.date}
-                    </p>
-                  </div>
+            {/* Controls */}
+            <div className="flex items-center justify-between mt-10">
+              <div className="flex items-center gap-2">
+                {featuredProjects.map((_, i) => (
+                  <button
+                    key={i}
+                    aria-label={`Go to project ${i + 1}`}
+                    onClick={() => setCurrentFeatured(i)}
+                    className={`dot ${i === currentFeatured ? 'dot-active' : ''}`}
+                  />
                 ))}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="mono-label mr-3">
+                  {String(currentFeatured + 1).padStart(2, '0')} / {String(featuredProjects.length).padStart(2, '0')}
+                </span>
+                <button onClick={prevFeatured} className="arrow-btn" aria-label="Previous">
+                  <ChevronLeft size={18} />
+                </button>
+                <button onClick={nextFeatured} className="arrow-btn" aria-label="Next">
+                  <ChevronRight size={18} />
+                </button>
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
-      <section 
-        id="works" 
-        className="py-24 fade-in-section"
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-semibold uppercase mb-2">
-              My Portfolio
-            </p>
+      {/* ═════ 02 — Also worth showing (Works grid) ═════ */}
+      <section id="works" className="py-24 fade-in-section relative">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
-            <h2 className="text-4xl font-bold text-white">Previous Work</h2>
+          <div className="section-marker">
+            <span className="num">02</span>
+            <span className="rule"></span>
+            <span className="mono-label">Other things</span>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {works.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setFilter(category.title)}
-                className={`px-6 py-2 rounded-lg capitalize transition-all ${
-                  filter === category.title
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                    : 'glass-effect-2 text-gray-300 hover:bg-white/10'
-                }`}
-              >
-                {category.title}
-              </button>
-            ))}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-6">
+            <h2 className="display-light" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', maxWidth: '18ch' }}>
+              A wider <em>look</em> at what I've made.
+            </h2>
+
+            <div className="flex flex-wrap gap-2">
+              {works.map((c) => (
+                <button
+                  key={c.id}
+                  onClick={() => setFilter(c.title)}
+                  className={`pill ${filter === c.title ? 'pill-active' : ''}`}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {c.title}
+                </button>
+              ))}
+            </div>
           </div>
 
           {filteredProjects.length === 0 ? (
             <div className="text-center py-16">
-              <p className="text-gray-400 text-lg font-regular">
-                No projects here yet
-              </p>
+              <p className="lede" style={{ fontSize: '1.1rem' }}>Nothing here yet — check back.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 stagger">
               {filteredProjects.map((project, idx) => (
                 <a
                   key={idx}
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="project-card group relative overflow-hidden rounded-2xl"
+                  className="project-card-paper"
+                  onClick={(e) => {
+                    if (project.category === 'app') {
+                      e.preventDefault();
+                      setSelectedProject(project);
+                      setShowModal(true);
+                    }
+                  }}
                 >
-                  <div className={`h-48 bg-gradient-to-r from-blue-800 to-blue-500 `}>
-                    <img src={project.image} className="w-full h-full object-cover"/>
+                  <div className="thumb">
+                    {project.image && <img src={project.image} alt={project.title} />}
                   </div>
-                  
-                  <div className="project-overlay absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 flex flex-col justify-center items-center p-6 text-center">
-                    <h3 className="text-2xl font-bold text-white mb-3">
-                      {project.title}
-                    </h3>
-
-                    <p className="text-gray-300 text-sm font-regular">
+                  <div className="p-5">
+                    <div className="flex items-start justify-between gap-3 mb-2">
+                      <h3 className="display" style={{ fontSize: '1.2rem', fontWeight: 500, lineHeight: 1.2 }}>
+                        {project.title}
+                      </h3>
+                      <ArrowUpRight size={18} style={{ color: 'var(--ink-soft)', flexShrink: 0, marginTop: '2px' }} />
+                    </div>
+                    <p className="text-sm mb-3" style={{ color: 'var(--ink-muted)', lineHeight: 1.5 }}>
                       {project.description}
                     </p>
-                  </div>
-
-                  <div className="p-4 bg-gradient-to-r from-blue-800 to-blue-300">
-                    <h3 className="text-lg font-semibold text-white">
-                      {project.title}
-                    </h3>
-
-                    <span className="inline-block mt-2 px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full font-regular">
-                      {project.category}
-                    </span>
+                    <span className="tag tag-sage">{project.category}</span>
                   </div>
                 </a>
               ))}
             </div>
           )}
+
+          {showModal && selectedProject?.category === 'app' && selectedProject && (
+            <div className="modal-overlay" onClick={() => setShowModal(false)}>
+              <div className="modal-box" onClick={e => e.stopPropagation()}>
+                <button className="modal-close" onClick={() => setShowModal(false)}>✕</button>
+                <iframe
+                  src={selectedProject.link}
+                  allow="autoplay"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          )}
+
         </div>
       </section>
 
-      <section 
-        id="skills" 
-        className="py-24 fade-in-section"
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5"></div>
-                 
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-semibold uppercase mb-2">
-              My Talents
-            </p>
+      {/* ═════ 03 — Some moments along the way (Experiences) ═════ */}
+      <section id="carousel" className="py-24 fade-in-section relative">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
-            <h2 className="text-4xl font-bold text-white">
-              Professional Skills
-            </h2>
-
+          <div className="section-marker">
+            <span className="num">03</span>
+            <span className="rule"></span>
+            <span className="mono-label">The journey</span>
           </div>
 
-          <div className="space-y-8">
-            <div className="relative overflow-hidden py-8">
-              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-transparent z-10"></div>
+          <h2 className="display-light mb-12" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', maxWidth: '22ch' }}>
+            A few <em>moments</em> from the way here.
+          </h2>
 
-              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-transparent to-transparent z-10"></div>
-              
-              <div className="marquee-container flex">
-                <div className="marquee-left flex gap-8">
-                  {[...frontendSkills, ...frontendSkills].map((skill, idx) => (
-                    <div
-                      key={idx}
-                      className="skill-item glass-effect px-10 py-4 rounded-2xl flex items-center gap-4"
-                    >
-                      <img className="w-10 h-5" src={skill.icon} />
+          <div className="relative">
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-700 ease-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {carouselItems.map((item, idx) => (
+                  <div key={idx} className="min-w-full">
+                    <div className="grid md:grid-cols-2 gap-10 items-center py-6">
+                      <div className="space-y-4">
+                        <div className="mono-label">{String(idx + 1).padStart(2, '0')}</div>
+                        <h3 className="display-light" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.5rem)' }}>
+                          {item.title}
+                        </h3>
+                        <p className="serif-italic" style={{ fontSize: '1.1rem', color: 'var(--sage-deep)' }}>
+                          {item.role}
+                        </p>
+                        <p style={{ color: 'var(--ink-muted)', lineHeight: 1.65 }}>
+                          {item.description}
+                        </p>
+                      </div>
 
-                      <span className="text-base font-regular">
-                        {skill.name}
-                      </span>
+                      <div className="relative">
+                        <div className="card-paper overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                          {item.image && (
+                            <img src={item.image} alt={item.title}
+                                 className="w-full h-full object-cover mask-fade-radial"
+                                 style={{ opacity: 0.85 }} />
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="relative overflow-hidden py-8">
-              <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-transparent z-10"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-transparent to-transparent z-10"></div>
-              
-              <div className="marquee-container flex">
-                <div className="marquee-right flex gap-8">
-                  {[...backendSkills, ...backendSkills].map((skill, idx) => (
-                    <div
-                      key={idx}
-                      className="skill-item glass-effect px-10 py-4 rounded-2xl flex items-center gap-4"
-                    >
-                      <img className="w-5 h-5" src={skill.icon} />
+            <div className="flex items-center justify-between mt-8">
+              <div className="flex items-center gap-2">
+                {carouselItems.map((_, i) => (
+                  <button key={i}
+                          onClick={() => setCurrentSlide(i)}
+                          aria-label={`Slide ${i + 1}`}
+                          className={`dot ${i === currentSlide ? 'dot-active' : ''}`} />
+                ))}
+              </div>
 
-                      <span className="text-base font-regular">
-                        {skill.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex items-center gap-2">
+                <button onClick={prevSlide} className="arrow-btn" aria-label="Previous">
+                  <ChevronLeft size={18} />
+                </button>
+
+                <button onClick={nextSlide} className="arrow-btn" aria-label="Next">
+                  <ChevronRight size={18} />
+                </button>
               </div>
             </div>
-            
+          </div>
+
+        </div>
+      </section>
+
+      {/* ═════ 05 — Stack (Skills marquee) ═════ */}
+      <section id="skills" className="py-24 fade-in-section relative">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 mb-10">
+
+          <div className="section-marker">
+            <span className="num">04</span>
+            <span className="rule"></span>
+            <span className="mono-label">Stack</span>
+          </div>
+
+          <h2 className="display-light" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)', maxWidth: '20ch' }}>
+            What I <em>build</em> with, day to day.
+          </h2>
+        </div>
+
+        <div className="space-y-6 mask-fade-x">
+          <div className="overflow-hidden py-4">
+            <div className="marquee-container">
+              <div className="marquee-left flex gap-4">
+                {[...frontendSkills, ...frontendSkills, ...frontendSkills].map((skill, idx) => (
+                  <div 
+                    key={idx} 
+                    className="skill-pill"
+                  >
+                    <img src={skill.icon} alt="" />
+                    <span>{skill.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="overflow-hidden py-4">
+            <div className="marquee-container">
+              <div className="marquee-right flex gap-4">
+                {[...backendSkills, ...backendSkills, ...backendSkills].map((skill, idx) => (
+                  <div key={idx} className="skill-pill">
+                    <img src={skill.icon} alt="" />
+                    <span>{skill.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section 
-        id="contact" 
-        className="py-24 relative overflow-hidden"
-        onMouseMove={handleContactMouseMove}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-blue-600/5"></div>
-        
-        {/* Cursor glow effect */}
-        <div 
-          className="absolute w-96 h-96 rounded-full pointer-events-none transition-opacity duration-300"
-          style={{
-            left: `${contactMousePos.x}px`,
-            top: `${contactMousePos.y}px`,
-            transform: 'translate(-50%, -50%)',
-            background: 'radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(168, 85, 247, 0.2) 30%, transparent 70%)',
-            filter: 'blur(50px)',
-            opacity: contactMousePos.x === 0 && contactMousePos.y === 0 ? 0 : 1
-          }}
-        />
+      {/* ═════ 06 — Get in touch (Contact) ═════ */}
+      <section id="contact" className="py-24 fade-in-section relative">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <p className="text-blue-400 text-sm font-bold uppercase tracking-wider mb-2">Get in touch</p>
-            <h2 className="text-5xl font-bold text-white">Let's Work Together</h2>
-            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-              Have a project in mind? Let's create something amazing together.
-            </p>
+          <div className="section-marker">
+            <span className="num">05</span>
+            <span className="rule"></span>
+            <span className="mono-label">Get in touch</span>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Contact Info */}
-            <div className="space-y-6">
-              {contacts.map((item, idx) => (
-                <div 
-                  key={idx}
-                  className="glass-effect-2 p-6 rounded-2xl hover:bg-white/5 transition-all duration-300 group"
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className="text-blue-400 mt-1 group-hover:scale-110 transition-transform duration-300">
-                      <item.icon size={24} />
+          <div className="grid md:grid-cols-5 gap-12 lg:gap-20">
+
+            {/* Left: invitation + contact info */}
+            <div className="md:col-span-2 space-y-10">
+              <div>
+                <h2 className="display-light mb-5" style={{ fontSize: 'clamp(2rem, 4vw, 3.25rem)' }}>
+                  Let's <em>build</em> something.
+                </h2>
+                <p className="lede" style={{ fontSize: '1.1rem' }}>
+                  Got a project, a question, or just want to say hello? Drop a line — I read everything.
+                </p>
+              </div>
+
+              <div className="space-y-5">
+                {contacts.map((c, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="mt-1" style={{ color: 'var(--sage-deep)' }}>
+                      <c.icon size={18} />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
-                      {item.link ? (
-                        <a 
-                          href={item.link}
-                          className="text-gray-400 hover:text-blue-400 transition-colors"
+                    
+                    <div>
+                      <div className="mono-label mb-1">{c.title}</div>
+                      {c.link ? (
+                        <a href={c.link}
+                           className="display"
+                           style={{ fontSize: '1.05rem', color: 'var(--ink)', transition: 'color 0.25s' }}
+                           onMouseEnter={(e) => e.currentTarget.style.color = 'var(--sage-deep)'}
+                           onMouseLeave={(e) => e.currentTarget.style.color = 'var(--ink)'}
                         >
-                          {item.content}
+                          {c.content}
                         </a>
                       ) : (
-                        <p className="text-gray-400">{item.content}</p>
+                        <p className="display" style={{ fontSize: '1.05rem' }}>{c.content}</p>
                       )}
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
-            {/* Contact Form */}
-            <div className="glass-effect-2 p-8 rounded-2xl space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-400 font-medium">Name</label>
+            {/* Right: form */}
+            <div className="md:col-span-3">
+              <div className="card-cream p-7 sm:p-9 space-y-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="mono-label block mb-2">Name</label>
+                    <input
+                      type="text" name="name"
+                      placeholder="Your name"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      required
+                      className="input-paper"
+                    />
+                  </div>
+                  <div>
+                    <label className="mono-label block mb-2">Email</label>
+                    <input
+                      type="email" name="email"
+                      placeholder="you@example.com"
+                      value={formData.email}
+                      onChange={handleFormChange}
+                      required
+                      className="input-paper"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="mono-label block mb-2">Subject</label>
                   <input
-                    type="text"
-                    name="name"
-                    placeholder="Your name"
-                    value={formData.name}
+                    type="text" name="subject"
+                    placeholder="What's it about?"
+                    value={formData.subject}
                     onChange={handleFormChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-gray-800 transition-all"
+                    className="input-paper"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-400 font-medium">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="your@email.com"
-                    value={formData.email}
+                <div>
+                  <label className="mono-label block mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    placeholder="Tell me a little about what you have in mind."
+                    rows="6"
+                    value={formData.message}
                     onChange={handleFormChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-gray-800 transition-all"
+                    className="input-paper"
+                    style={{ resize: 'vertical', fontFamily: 'var(--font-body)' }}
                   />
                 </div>
+                <button onClick={handleSubmit} className="btn btn-ink w-full justify-center">
+                  <Send size={15} />
+                  Send message
+                </button>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Subject</label>
-                <input
-                  type="text"
-                  name="subject"
-                  placeholder="What's this about?"
-                  value={formData.subject}
-                  onChange={handleFormChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-gray-800 transition-all"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm text-gray-400 font-medium">Message</label>
-                <textarea
-                  name="message"
-                  placeholder="Tell me about your project..."
-                  rows="6"
-                  value={formData.message}
-                  onChange={handleFormChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-700/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-gray-800 resize-none transition-all"
-                ></textarea>
-              </div>
-              <button
-                onClick={handleSubmit}
-                className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-600 transition-all duration-300 inline-flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <Send size={20} />
-                Send Message
-              </button>
             </div>
+
           </div>
         </div>
       </section>
 
-      <footer className="glass-effect py-8 ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-100 font-regular">2025 © Josiah-John Green. All Right Reserved</p>
-            
-            <div className="flex items-center space-x-6">
-              <a href="https://3urek4.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
-                <LinkIcon size={20} />
-              </a>
-            
-              <a href="https://www.linkedin.com/in/josiah-john-green/" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
-                <Linkedin size={20} />
-              </a>
-            
-              <a href="https://github.com/j0hnc0d3s" target="_blank" rel="noopener noreferrer" className="text-gray-100 hover:text-blue-500 transition-colors">
-                <Github size={20} />
-              </a>
+      {/* ═════ Footer ═════ */}
+      <footer className="py-12 relative" style={{ borderTop: '1px solid var(--rule)' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-5">
+
+            <div className="flex items-center gap-3">
+              <span className="display" style={{ fontSize: '1.05rem', fontWeight: 500 }}>
+                John<em style={{ fontStyle: 'italic', color: 'var(--sage-deep)' }}>.</em>
+              </span>
+              <span className="mono-label">© 2026 · Josiah-John Green</span>
             </div>
+
+            <div className="flex items-center gap-5">
+              {socials.map((s, i) => (
+                <a key={i} href={s.link} target="_blank" rel="noopener noreferrer"
+                   aria-label={s.label}
+                   style={{ color: 'var(--ink-muted)', transition: 'color 0.25s' }}
+                   onMouseEnter={(e) => e.currentTarget.style.color = 'var(--sage-deep)'}
+                   onMouseLeave={(e) => e.currentTarget.style.color = 'var(--ink-muted)'}
+                >
+                  <s.icon size={18} />
+                </a>
+              ))}
+            </div>
+
           </div>
         </div>
       </footer>
+
     </div>
   );
 };
