@@ -44,7 +44,7 @@ const Portfolio = () => {
       tagline: 'Multi-Tenant Inventory Management System',
       description: 'Production-grade enterprise SaaS approved as the replacement for an MSBM Power Platform pilot. Multi-tenancy enforced through JWT-scoped row-level isolation, designed to license to other Caribbean institutions.',
       tech: ['Flask', 'PostgreSQL', 'React', 'Vite', 'APScheduler'],
-      image: '',
+      image: images.projectStack,
       liveDemo: '',
       github: '',
       role: 'Founder & Lead Engineer',
@@ -59,7 +59,9 @@ const Portfolio = () => {
       liveDemo: '',
       github: '',
       role: 'Co-Founder',
-      awards: ['Intellibus Social Good Award 2026']
+      awards: [
+        { label: 'Intellibus Social Good Award 2026', link: 'https://www.instagram.com/p/DV95jRkERus/?img_index=2' },
+      ]
     },
     {
       title: 'FreshJA',
@@ -70,7 +72,10 @@ const Portfolio = () => {
       liveDemo: '',
       github: '',
       role: 'Co-Founder & CTO',
-      awards: ['Vincent Hosang 2025 — 1st Runner Up', 'Resolution SVC 2026 Finalist']
+      awards: [
+        { label: 'Vincent Hosang 2025 — 1st Runner Up', link: 'https://www.mona.uwi.edu/fst/celebrating-excellence-freshja-triumphs-vincent-hosang-uwi-venture-competition-20242025' },
+        { label: 'Resolution SVC 2026 Finalist', link: 'https://www.linkedin.com/feed/update/urn:li:activity:7456081771781267456/' }
+      ]
     },
     {
       title: 'Ripple',
@@ -145,8 +150,8 @@ const Portfolio = () => {
     { title: 'Movie Renting Web Application', description: 'A web application that shows different movies you can rent.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-lab5', image: images.project8 },
     { title: 'Social Media Web App', description: 'A collaborative final project for a web development course.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-project2', image: images.project7 },
     { title: 'Property Renting Web App', description: 'An app that showcases various properties and related information with contact capabilities.', category: 'web', link: 'https://github.com/j0hnc0d3s/info3180-project1', image: images.project4 },
-    { title: 'Peli-Plan', description: 'A campus navigation application.', category: 'app', link: 'https://drive.google.com/file/d/1q7jiil6SqVr9LAryNveosBgZuSd3t0_L/view?usp=drive_link', image: images.project16 },
-    { title: 'Jam-Go', description: 'An island-wide transit app that incorporates both taxi and bus transportation.', category: 'app', link: 'https://drive.google.com/file/d/1kGs69HkV7CJ5oby4AgeJBe91JmZTCglD/view?usp=drive_link', image: images.projectJamGo },
+    { title: 'Peli-Plan', description: 'A campus navigation application.', category: 'app', link: 'https://drive.google.com/file/d/1q7jiil6SqVr9LAryNveosBgZuSd3t0_L/view?usp=sharing', image: images.project16 },
+    { title: 'Jam-Go', description: 'An island-wide transit app that incorporates both taxi and bus transportation.', category: 'app', link: 'https://drive.google.com/file/d/1kGs69HkV7CJ5oby4AgeJBe91JmZTCglD/view?usp=sharing', image: images.projectJamGo },
     { title: 'Club', description: 'A showcase of my designs done during my tenure with the UWI Japan Club.', category: 'design', link: 'https://drive.google.com/drive/folders/1UR8ucK7KTVspJmV4abj89uIeD3guHEoO?usp=sharing', image: images.project9 },
     { title: 'Guild', description: 'A showcase of my designs done during my tenure with the Faculty of Science and Technology Guild.', category: 'design', link: 'https://drive.google.com/drive/folders/1MLvWugbG3cSrIVdehqeZ6FHpCl3rX-gG?usp=drive_link', image: images.project3 },
     { title: 'Companies', description: 'A showcase of my designs done during my tenure across various positions outside the Japan Club and the Faculty Guild.', category: 'design', link: 'https://drive.google.com/drive/folders/1Pb-c6U6GJIFhb6nkDMUa3v5z4hZMRKus?usp=sharing', image: images.project10 },
@@ -521,12 +526,23 @@ const Portfolio = () => {
 
                         {project.awards && project.awards.length > 0 && (
                           <div className="flex flex-wrap gap-2">
-                            {project.awards.map((award, i) => (
-                              <span key={i} className="tag tag-amber inline-flex items-center gap-1.5">
-                                <Award size={11} />
-                                {award}
-                              </span>
-                            ))}
+                            {project.awards.map((award, i) => {
+                              const awardLabel = typeof award === 'string' ? award : award.label;
+                              const awardLink = typeof award === 'string' ? '' : award.link;
+
+                              const Tag = awardLink ? 'a' : 'span';
+
+                              return (
+                                <Tag
+                                  key={i}
+                                  {...(awardLink ? { href: awardLink, target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                  className="tag tag-amber inline-flex items-center gap-1.5"
+                                >
+                                  <Award size={11} />
+                                  {awardLabel}
+                                </Tag>
+                              );
+                            })}
                           </div>
                         )}
 

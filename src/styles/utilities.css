@@ -503,6 +503,52 @@
 .hero-card-tr:hover { transform: rotate(0deg) translateY(-3px); }
 .hero-card-bl:hover { transform: rotate(0deg) translateY(-3px); }
 
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  animation: fade-in 0.2s ease;
+}
+@keyframes fade-in {
+  from { opacity: 0; } to { opacity: 1; }
+}
+.modal-box {
+  position: relative;
+  height: 100%; max-height: 800px;
+  width: 100%; max-width: 370px;
+  aspect-ratio: 16/9;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  animation: slide-up 0.3s ease;
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.modal-box iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
+.modal-close {
+  position: absolute; top: 0.85rem; right: 0.85rem; z-index: 10;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white; font-size: 0.75rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+}
+.modal-close:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
 /* Mobile: stack the cards into a tidy column under the portrait,
    no rotations, no overlap. */
 @media (max-width: 760px) {

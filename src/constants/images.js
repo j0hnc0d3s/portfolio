@@ -18,6 +18,9 @@ import project10 from '../assets/images/projects/project10.png';
 import projectCrime from '../assets/images/projects/projectCrime.png';
 import project12 from '../assets/images/projects/project12.jpg';
 import projectJamGo from '../assets/images/projects/projectJamGo.png';
+import projectAegis from '../assets/images/projects/projectAegis.png';
+import projectMedic from '../assets/images/projects/projectMedic.png';
+import projectStack from '../assets/images/projects/projectStack.png';
 import project14 from '../assets/images/projects/project14.png';
 import project15 from '../assets/images/projects/project15.png';
 import project16 from '../assets/images/projects/project16.jpg';
@@ -46,5 +49,8 @@ export default {
     project14,
     project15,
     project16,
-    me
+    me,
+    projectStack,
+    projectMedic,
+    projectAegis
 };
